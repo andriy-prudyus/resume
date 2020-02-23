@@ -33,9 +33,6 @@ class CompanyListRepository(
                             companies.toCompaniesWithRelations()
                         }
                         .flatMap { companiesWithRelations ->
-                            dbMediator.companyDao.delete().toSingleDefault(companiesWithRelations)
-                        }
-                        .flatMap { companiesWithRelations ->
                             saveCompanies(companiesWithRelations).toSingleDefault(Any())
                         }
                         .flatMap {
@@ -46,6 +43,8 @@ class CompanyListRepository(
                 }
             }
     }
+
+    fun deleteCompanies(): Completable = dbMediator.companyDao.delete()
 
     private fun loadCompaniesFromServer(): Single<List<CompanyDto>> {
         return restClientMediator.companyApi.loadCompanies()
