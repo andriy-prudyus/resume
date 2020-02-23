@@ -53,7 +53,7 @@ class CompanyListRepository(
                 val content = response.body()!!.files[FILE_NAME]?.content
 
                 if (content == null) {
-                    Single.error(Exception("File content is invalid")) //TODO: Use localized string
+                    Single.error(IllegalArgumentException("File content is invalid")) //TODO: Use localized string
                 } else {
                     Single.just(Gson().fromJson<List<CompanyDto>>(content, token))
                 }
