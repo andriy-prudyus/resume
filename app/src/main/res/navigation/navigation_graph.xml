@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_graph"
+    app:startDestination="@+id/companyListFragment">
+
+    <fragment
+        android:id="@+id/companyListFragment"
+        android:name="com.andriiprudyus.myresume.ui.company.list.view.CompanyListFragment"
+        android:label="@string/companies"
+        tools:layout="@layout/fragment_company_list">
+
+        <action
+            android:id="@+id/toCompanyDetailsFragment"
+            app:destination="@id/companyDetailsFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/companyDetailsFragment"
+        android:name="com.andriiprudyus.myresume.ui.company.details.view.CompanyDetailsFragment"
+        tools:layout="@layout/fragment_company_details">
+
+        <argument
+            android:name="companyName"
+            app:argType="string" />
+    </fragment>
+</navigation>

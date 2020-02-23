@@ -1,0 +1,81 @@
+apply plugin: 'com.android.application'
+
+apply plugin: 'kotlin-android'
+
+apply plugin: 'kotlin-android-extensions'
+
+apply plugin: 'kotlin-kapt'
+
+apply plugin: "androidx.navigation.safeargs"
+
+android {
+    compileSdkVersion 28
+
+    defaultConfig {
+        applicationId "com.andriiprudyus.myresume"
+        minSdkVersion 21
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
+    }
+
+    buildTypes {
+        debug {
+            minifyEnabled false
+            buildConfigField("Boolean", "isLoggingEnabled", "true")
+        }
+        release {
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField("Boolean", "isLoggingEnabled", "false")
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation libraries.kotlin
+    implementation libraries.appCompat
+    implementation libraries.core
+    implementation libraries.material
+    implementation libraries.constraintLayout
+    implementation libraries.swiperefreshlayout
+    implementation libraries.navigationFragment
+    implementation libraries.navigationUi
+    implementation libraries.lifecycleExtensions
+    implementation libraries.navigationFragmentKtx
+    implementation libraries.navigationUiKtx
+
+    implementation libraries.room
+    implementation libraries.roomRxJava2
+    kapt libraries.roomCompiler
+
+    implementation libraries.gson
+
+    implementation libraries.glide
+
+    implementation libraries.retrofit
+    implementation libraries.retrofitConverterGson
+    implementation libraries.retrofit2AdapterRxJava2
+
+    implementation libraries.okhttpLoggingInterceptor
+    implementation libraries.okhttpProfiler
+
+    implementation libraries.rxJava
+    implementation libraries.rxAndroid
+
+    testImplementation testLibraries.junit
+    androidTestImplementation testLibraries.extJunit
+    androidTestImplementation testLibraries.espressoCore
+}
