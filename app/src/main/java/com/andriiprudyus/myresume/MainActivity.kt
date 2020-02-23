@@ -25,11 +25,8 @@ class MainActivity : AppCompatActivity() {
         navController = findNavController(R.id.navHostFragment)
 
         appBarConfiguration = AppBarConfiguration(
-            setOf(
-                R.id.companyListFragment/*, R.id.nav_gallery, R.id.nav_slideshow,
-                R.id.nav_tools, R.id.nav_share, R.id.nav_send
-            */
-            ), drawerLayout
+            setOf(R.id.companies, R.id.about),
+            drawerLayout
         )
 
         setupActionBarWithNavController(navController, appBarConfiguration)

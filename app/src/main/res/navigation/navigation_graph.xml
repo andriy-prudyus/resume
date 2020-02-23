@@ -3,10 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation_graph"
-    app:startDestination="@+id/companyListFragment">
+    app:startDestination="@+id/companies">
 
     <fragment
-        android:id="@+id/companyListFragment"
+        android:id="@+id/companies"
         android:name="com.andriiprudyus.myresume.ui.company.list.view.CompanyListFragment"
         android:label="@string/companies"
         tools:layout="@layout/fragment_company_list">
@@ -25,4 +25,9 @@
             android:name="companyName"
             app:argType="string" />
     </fragment>
+
+    <fragment
+        android:id="@+id/about"
+        android:name="com.andriiprudyus.myresume.ui.about.view.AboutFragment"
+        tools:layout="@layout/fragment_about" />
 </navigation>
