@@ -12,7 +12,6 @@ import kotlinx.android.synthetic.main.list_item_company_details_achievement.view
 import kotlinx.android.synthetic.main.list_item_company_details_responsibility.view.*
 import kotlinx.android.synthetic.main.list_item_company_details_role.view.*
 import kotlinx.android.synthetic.main.list_item_company_details_summary.view.*
-import java.lang.IllegalArgumentException
 
 class RolesAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -35,7 +34,7 @@ class RolesAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             val roleName: String,
             val startedAt: Long,
             val endedAt: Long
-        ): Item()
+        ) : Item()
 
         data class Responsibility(
             val responsibilityName: String
@@ -71,7 +70,11 @@ class RolesAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             }
             TYPE_RESPONSIBILITY -> {
                 ResponsibilityViewHolder(
-                    inflater.inflate(R.layout.list_item_company_details_responsibility, parent, false)
+                    inflater.inflate(
+                        R.layout.list_item_company_details_responsibility,
+                        parent,
+                        false
+                    )
                 )
             }
             TYPE_ACHIEVEMENT -> {

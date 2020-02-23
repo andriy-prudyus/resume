@@ -2,7 +2,6 @@ package com.andriiprudyus.myresume.base.viewModel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
-import com.andriiprudyus.myresume.State
 
 class ResultObserver<T : Any>(
     private val liveData: LiveData<State<T>>,

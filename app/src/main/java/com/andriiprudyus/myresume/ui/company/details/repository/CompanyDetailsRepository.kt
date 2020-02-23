@@ -2,12 +2,11 @@ package com.andriiprudyus.myresume.ui.company.details.repository
 
 import com.andriiprudyus.myresume.db.DbMediator
 import com.andriiprudyus.myresume.db.achievement.Achievement
-import com.andriiprudyus.myresume.db.company.Company
 import com.andriiprudyus.myresume.db.responsibility.Responsibility
 import com.andriiprudyus.myresume.db.role.Role
 import io.reactivex.Single
 
-class CompanyDetailsRepository(    private val dbMediator: DbMediator) {
+class CompanyDetailsRepository(private val dbMediator: DbMediator) {
 
     fun loadSummary(companyName: String): Single<String> {
         return dbMediator.companyDao.selectSummary(companyName)

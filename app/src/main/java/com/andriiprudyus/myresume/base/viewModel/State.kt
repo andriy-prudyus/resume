@@ -1,4 +1,4 @@
-package com.andriiprudyus.myresume
+package com.andriiprudyus.myresume.base.viewModel
 
 sealed class State<T : Any> {
 

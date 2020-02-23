@@ -8,12 +8,14 @@ import io.reactivex.Single
 @Dao
 abstract class ResponsibilityDao : BaseDao<DbResponsibility>() {
 
-    @Query("""
+    @Query(
+        """
         SELECT 
             roleName,
             responsibilityName 
         FROM DbResponsibility 
         WHERE companyName = :companyName
-    """)
+    """
+    )
     abstract fun select(companyName: String): Single<List<Responsibility>>
 }

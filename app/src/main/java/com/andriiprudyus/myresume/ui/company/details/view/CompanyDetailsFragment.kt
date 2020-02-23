@@ -10,8 +10,8 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.andriiprudyus.myresume.MainActivity
 import com.andriiprudyus.myresume.R
-import com.andriiprudyus.myresume.State
 import com.andriiprudyus.myresume.base.viewModel.ResultObserver
+import com.andriiprudyus.myresume.base.viewModel.State
 import com.andriiprudyus.myresume.ui.company.details.adapter.RolesAdapter
 import com.andriiprudyus.myresume.ui.company.details.viewModel.CompanyDetailsViewModel
 import com.andriiprudyus.myresume.ui.company.details.viewModel.CompanyDetailsViewModelFactory

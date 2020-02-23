@@ -8,7 +8,8 @@ import io.reactivex.Single
 @Dao
 abstract class RoleDao : BaseDao<DbRole>() {
 
-    @Query("""
+    @Query(
+        """
         SELECT 
             roleName,
             startedAt,
@@ -16,6 +17,7 @@ abstract class RoleDao : BaseDao<DbRole>() {
         FROM DbRole
         WHERE companyName = :companyName
         ORDER BY endedAt DESC
-    """)
+    """
+    )
     abstract fun select(companyName: String): Single<List<Role>>
 }

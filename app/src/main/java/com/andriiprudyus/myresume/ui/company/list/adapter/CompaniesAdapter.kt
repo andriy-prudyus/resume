@@ -36,8 +36,8 @@ class CompaniesAdapter : RecyclerView.Adapter<CompaniesAdapter.ItemViewHolder>()
     }
 
     fun replaceCompanies(newCompanies: List<Company>) {
-            val diffCallback = CompanyDiffCallback(companies, newCompanies)
-         val diffResult = DiffUtil.calculateDiff(diffCallback)
+        val diffCallback = CompanyDiffCallback(companies, newCompanies)
+        val diffResult = DiffUtil.calculateDiff(diffCallback)
 
         companies.apply {
             clear()

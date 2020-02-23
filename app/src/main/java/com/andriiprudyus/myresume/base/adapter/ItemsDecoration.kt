@@ -30,7 +30,12 @@ class ItemsDecoration(
         offsetPxBottom = offsetResBottom?.let { context.resources.getDimensionPixelSize(it) } ?: 0
     }
 
-    override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State) {
+    override fun getItemOffsets(
+        outRect: Rect,
+        view: View,
+        parent: RecyclerView,
+        state: RecyclerView.State
+    ) {
         super.getItemOffsets(outRect, view, parent, state)
         outRect.set(offsetPxLeft, offsetPxTop, offsetPxRight, offsetPxBottom)
     }

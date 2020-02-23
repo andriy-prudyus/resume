@@ -2,8 +2,8 @@ package com.andriiprudyus.myresume.ui.company.details.viewModel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.andriiprudyus.myresume.State
 import com.andriiprudyus.myresume.base.viewModel.BaseViewModel
+import com.andriiprudyus.myresume.base.viewModel.State
 import com.andriiprudyus.myresume.db.achievement.Achievement
 import com.andriiprudyus.myresume.db.responsibility.Responsibility
 import com.andriiprudyus.myresume.db.role.Role
@@ -13,7 +13,6 @@ import com.andriiprudyus.myresume.ui.company.details.adapter.RolesAdapter
 import com.andriiprudyus.myresume.ui.company.details.repository.CompanyDetailsRepository
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.functions.BiFunction
 import io.reactivex.functions.Function4
 import io.reactivex.schedulers.Schedulers
 

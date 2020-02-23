@@ -2,7 +2,8 @@ package com.andriiprudyus.myresume.db.company
 
 import androidx.room.DatabaseView
 
-@DatabaseView("""
+@DatabaseView(
+    """
     SELECT 
         c.companyName, 
         c.logoUrl,
@@ -11,7 +12,8 @@ import androidx.room.DatabaseView
         (SELECT MAX(endedAt) FROM DbRole WHERE companyName = c.companyName) AS endedAt,
         (SELECT roleName FROM DbRole WHERE companyName = c.companyName ORDER BY endedAt DESC LIMIT 1) AS roleName
     FROM DbCompany c
-""")
+"""
+)
 data class Company(
     val companyName: String,
     val logoUrl: String,

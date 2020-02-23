@@ -8,12 +8,14 @@ import io.reactivex.Single
 @Dao
 abstract class AchievementDao : BaseDao<DbAchievement>() {
 
-    @Query("""
+    @Query(
+        """
         SELECT 
             roleName,
             achievementName
         FROM DbAchievement
         WHERE companyName = :companyName
-    """)
+    """
+    )
     abstract fun select(companyName: String): Single<List<Achievement>>
 }

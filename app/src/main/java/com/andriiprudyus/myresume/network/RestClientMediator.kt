@@ -1,14 +1,11 @@
 package com.andriiprudyus.myresume.network
 
 import android.content.Context
-import android.util.Log
 import com.andriiprudyus.myresume.BuildConfig
 import com.andriiprudyus.myresume.log.AppLog
 import com.itkacher.okhttpprofiler.OkHttpProfilerInterceptor
-import io.reactivex.Single
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
-import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
@@ -42,7 +39,8 @@ class RestClientMediator(context: Context) {
                             }
                         },
                         if (BuildConfig.DEBUG) OkHttpProfilerInterceptor() else null
-                    ))
+                    )
+                    )
                     .build()
             )
             .addConverterFactory(GsonConverterFactory.create())

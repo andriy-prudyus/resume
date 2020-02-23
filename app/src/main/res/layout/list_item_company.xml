@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:background="?colorDialogBackground"
     android:foreground="?selectableItemBackground">
 
@@ -18,8 +17,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:src="@mipmap/ic_launcher"
-        tools:ignore="ContentDescription" />
+        tools:ignore="ContentDescription"
+        tools:src="@mipmap/ic_launcher" />
 
     <TextView
         android:id="@+id/companyNameTextView"
@@ -40,10 +39,10 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:textSize="@dimen/text_medium"
+        app:layout_constraintEnd_toEndOf="@id/companyNameTextView"
         app:layout_constraintStart_toStartOf="@id/companyNameTextView"
         app:layout_constraintTop_toBottomOf="@id/companyNameTextView"
-        app:layout_constraintEnd_toEndOf="@id/companyNameTextView"
-        tools:text="@tools:sample/lorem"/>
+        tools:text="@tools:sample/lorem" />
 
     <TextView
         android:id="@+id/durationTextView"
