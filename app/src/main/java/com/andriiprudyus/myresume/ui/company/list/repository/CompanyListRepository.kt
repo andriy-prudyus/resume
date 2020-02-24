@@ -10,41 +10,61 @@ import com.andriiprudyus.myresume.db.responsibility.DbResponsibility
 import com.andriiprudyus.myresume.db.role.DbRole
 import com.andriiprudyus.myresume.network.RestClientMediator
 import com.andriiprudyus.myresume.network.model.CompanyDto
+import com.andriiprudyus.myresume.sharedPreferences.CompanySharedPreferences
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import io.reactivex.Completable
 import io.reactivex.Single
+import java.util.*
 
 class CompanyListRepository(
     private val restClientMediator: RestClientMediator,
-    private val dbMediator: DbMediator
+    private val dbMediator: DbMediator,
+    private val sharedPreferences: CompanySharedPreferences,
+    private val calendar: Calendar
 ) {
 
     companion object {
         private const val FILE_NAME = "Companies.json"
+        private const val CACHE_EXPIRATION = 86400000 // ms (1 day)
     }
 
     fun loadCompanies(): Single<List<Company>> {
-        return dbMediator.companyDao.selectCompanies()
+        return Single.fromCallable {
+            sharedPreferences.lastLoadDataTimestamp
+        }
             .flatMap {
-                if (it.isEmpty()) {
+                if (calendar.timeInMillis - it > CACHE_EXPIRATION) {
                     loadCompaniesFromServer()
                         .map { companies ->
                             companies.toCompaniesWithRelations()
                         }
                         .flatMap { companiesWithRelations ->
+                            dbMediator.companyDao.delete().toSingleDefault(companiesWithRelations)
+                        }
+                        .flatMap { companiesWithRelations ->
                             saveCompanies(companiesWithRelations).toSingleDefault(Any())
                         }
-                        .flatMap {
-                            dbMediator.companyDao.selectCompanies()
+                        .map {
+                            sharedPreferences.lastLoadDataTimestamp = calendar.timeInMillis
                         }
                 } else {
-                    Single.just(it)
+                    Single.just(Any())
                 }
+            }
+            .flatMap {
+                dbMediator.companyDao.selectCompanies()
             }
     }
 
-    fun deleteCompanies(): Completable = dbMediator.companyDao.delete()
+    fun refreshCompanies(): Single<List<Company>> {
+        return Single.fromCallable {
+            sharedPreferences.lastLoadDataTimestamp = 0
+        }
+            .flatMap {
+                loadCompanies()
+            }
+    }
 
     private fun loadCompaniesFromServer(): Single<List<CompanyDto>> {
         return restClientMediator.companyApi.loadCompanies()
