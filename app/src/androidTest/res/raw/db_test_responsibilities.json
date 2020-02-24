@@ -1,0 +1,67 @@
+[
+  {
+    "companyName": "eMagicOne",
+    "roleName": "Android Developer / Team Lead",
+    "responsibilityName": "Developing mobile apps for Android"
+  },
+  {
+    "companyName": "eMagicOne",
+    "roleName": "Android Developer / Team Lead",
+    "responsibilityName": "Creating sprints and tasks"
+  },
+  {
+    "companyName": "eMagicOne",
+    "roleName": "Android Developer / Team Lead",
+    "responsibilityName": "Estimating deadlines"
+  },
+  {
+    "companyName": "eMagicOne",
+    "roleName": "Android Developer / Team Lead",
+    "responsibilityName": "Publishing apps on PlayStore"
+  },
+  {
+    "companyName": "eMagicOne",
+    "roleName": "Android Developer",
+    "responsibilityName": "Developing mobile apps for Android"
+  },
+  {
+    "companyName": "eMagicOne",
+    "roleName": "Android Developer",
+    "responsibilityName": "Writing tests"
+  },
+  {
+    "companyName": "Google",
+    "roleName": "Android Developer",
+    "responsibilityName": "Developing mobile apps using Java"
+  },
+  {
+    "companyName": "Google",
+    "roleName": "Android Developer",
+    "responsibilityName": "Refactoring"
+  },
+  {
+    "companyName": "Google",
+    "roleName": "Android Developer",
+    "responsibilityName": "Learning new technologies"
+  },
+  {
+    "companyName": "Google",
+    "roleName": "Junior Android Developer",
+    "responsibilityName": "Developing mobile apps using Java"
+  },
+  {
+    "companyName": "Google",
+    "roleName": "Junior Android Developer",
+    "responsibilityName": "Refactoring"
+  },
+  {
+    "companyName": "Google",
+    "roleName": "Junior Android Developer",
+    "responsibilityName": "Learning new technologies"
+  },
+  {
+    "companyName": "Google",
+    "roleName": "Junior Android Developer",
+    "responsibilityName": "Testing"
+  }
+]

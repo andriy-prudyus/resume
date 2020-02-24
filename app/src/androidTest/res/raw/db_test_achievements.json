@@ -1,0 +1,62 @@
+[
+  {
+    "companyName": "eMagicOne",
+    "roleName": "Android Developer / Team Lead",
+    "achievementName": "Published Mobile Assistant for PrestaShop"
+  },
+  {
+    "companyName": "eMagicOne",
+    "roleName": "Android Developer / Team Lead",
+    "achievementName": "Published Mobile Assistant for WooCommerce"
+  },
+  {
+    "companyName": "eMagicOne",
+    "roleName": "Android Developer / Team Lead",
+    "achievementName": "Published Mobile Assistant for Magento"
+  },
+  {
+    "companyName": "eMagicOne",
+    "roleName": "Android Developer",
+    "achievementName": "Developed Mobile Assistant for PrestaShop"
+  },
+  {
+    "companyName": "eMagicOne",
+    "roleName": "Android Developer",
+    "achievementName": "Developed Mobile Assistant for WooCommerce"
+  },
+  {
+    "companyName": "eMagicOne",
+    "roleName": "Android Developer",
+    "achievementName": "Developed Mobile Assistant for Magento"
+  },
+  {
+    "companyName": "Google",
+    "roleName": "Android Developer",
+    "achievementName": "Learned MVVM"
+  },
+  {
+    "companyName": "Google",
+    "roleName": "Android Developer",
+    "achievementName": "Learned MVC"
+  },
+  {
+    "companyName": "Google",
+    "roleName": "Android Developer",
+    "achievementName": "Learned RxJava"
+  },
+  {
+    "companyName": "Google",
+    "roleName": "Junior Android Developer",
+    "achievementName": "Learned JUnit"
+  },
+  {
+    "companyName": "Google",
+    "roleName": "Junior Android Developer",
+    "achievementName": "Learned Espresso"
+  },
+  {
+    "companyName": "Google",
+    "roleName": "Junior Android Developer",
+    "achievementName": "Learned Android"
+  }
+]
