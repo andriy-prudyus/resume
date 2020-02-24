@@ -39,10 +39,7 @@ class CompanyListViewModel(
 
     fun refresh(): LiveData<State<Any>> {
         return MutableLiveData<State<Any>>().also { result ->
-            repository.deleteCompanies().toSingleDefault(Any())
-                .flatMap {
-                    repository.loadCompanies()
-                }
+            repository.refreshCompanies()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe {
