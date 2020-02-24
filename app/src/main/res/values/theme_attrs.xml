@@ -2,4 +2,5 @@
 <resources>
     <attr name="colorFragmentBackground" format="color" />
     <attr name="colorDialogBackground" format="color" />
+    <attr name="colorIcon" format="color" />
 </resources>

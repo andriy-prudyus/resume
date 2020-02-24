@@ -166,7 +166,7 @@ class RolesAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                         paddingLeft,
                         paddingTop,
                         paddingRight,
-                        if (lastItem) resources.getDimension(R.dimen.base_margin).toInt() else 0
+                        if (lastItem) resources.getDimension(R.dimen.margin_base).toInt() else 0
                     )
                 }
             }

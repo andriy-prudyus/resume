@@ -1,13 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_home"
-            android:icon="@drawable/ic_launcher_background"
-            android:title="@string/menu_about" />
+            android:id="@+id/companies"
+            android:icon="@drawable/ic_work"
+            android:title="@string/companies"
+            app:iconTint="?colorIcon" />
+
+        <item
+            android:id="@+id/about"
+            android:icon="@drawable/ic_info"
+            android:title="@string/about"
+            app:iconTint="?colorIcon" />
     </group>
 
 </menu>

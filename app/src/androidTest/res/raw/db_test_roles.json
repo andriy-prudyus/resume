@@ -1,0 +1,26 @@
+[
+  {
+    "roleName": "Android Developer / Team Lead",
+    "companyName": "eMagicOne",
+    "startedAt": 1546300800000,
+    "endedAt": 1577750400000
+  },
+  {
+    "roleName": "Android Developer",
+    "companyName": "eMagicOne",
+    "startedAt": 1503014400000,
+    "endedAt": 1546214400000
+  },
+  {
+    "roleName": "Android Developer",
+    "companyName": "Google",
+    "startedAt": 1464739200000,
+    "endedAt": 1502928000000
+  },
+  {
+    "roleName": "Junior Android Developer",
+    "companyName": "Google",
+    "startedAt": 1451606400000,
+    "endedAt": 1464393600000
+  }
+]
