@@ -25,7 +25,7 @@ import com.andriiprudyus.myresume.db.role.RoleDao
         Company::class
     ],
     version = 1,
-    exportSchema = false
+    exportSchema = true
 )
 abstract class AppDatabase : RoomDatabase() {
 
