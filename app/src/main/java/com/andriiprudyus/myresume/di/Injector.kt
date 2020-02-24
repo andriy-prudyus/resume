@@ -21,7 +21,7 @@ object Injector {
         this.application = application
         companySharedPreferences = CompanySharedPreferences(application)
         dbMediator = DbMediator(application)
-        restClientMediator = RestClientMediator(application)
+        restClientMediator = RestClientMediator()
         companyDetailsRepository = CompanyDetailsRepository(dbMediator)
 
         companyListRepository = CompanyListRepository(
