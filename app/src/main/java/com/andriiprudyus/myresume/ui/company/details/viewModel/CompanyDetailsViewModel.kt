@@ -4,9 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.andriiprudyus.myresume.base.viewModel.BaseViewModel
 import com.andriiprudyus.myresume.base.viewModel.State
-import com.andriiprudyus.myresume.db.achievement.Achievement
-import com.andriiprudyus.myresume.db.responsibility.Responsibility
-import com.andriiprudyus.myresume.db.role.Role
+import com.andriiprudyus.database.achievement.Achievement
+import com.andriiprudyus.database.responsibility.Responsibility
+import com.andriiprudyus.database.role.Role
 import com.andriiprudyus.myresume.di.Injector
 import com.andriiprudyus.myresume.log.AppLog
 import com.andriiprudyus.myresume.ui.company.details.adapter.RolesAdapter

@@ -1,7 +1,7 @@
 package com.andriiprudyus.myresume.di
 
 import android.app.Application
-import com.andriiprudyus.myresume.db.DbMediator
+import com.andriiprudyus.database.DbMediator
 import com.andriiprudyus.myresume.network.RestClientMediator
 import com.andriiprudyus.myresume.sharedPreferences.CompanySharedPreferences
 import com.andriiprudyus.myresume.ui.company.details.repository.CompanyDetailsRepository

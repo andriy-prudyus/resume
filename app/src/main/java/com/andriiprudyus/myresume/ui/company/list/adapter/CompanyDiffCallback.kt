@@ -1,7 +1,7 @@
 package com.andriiprudyus.myresume.ui.company.list.adapter
 
 import androidx.recyclerview.widget.DiffUtil
-import com.andriiprudyus.myresume.db.company.Company
+import com.andriiprudyus.database.company.Company
 
 class CompanyDiffCallback(
     private val oldList: List<Company>,

@@ -44,6 +44,7 @@ ext {
     glideVersion = "4.9.0"
 
     junitVersion = "4.12"
+    testRunnerVersion = "1.2.0"
     extJunitVersion = "1.1.1"
     espressoCoreVersion = "3.2.0"
 
@@ -61,7 +62,7 @@ ext {
 
             lifecycleExtensions     : "androidx.lifecycle:lifecycle-extensions:$lifecycleExtensionsVersion",
 
-            swiperefreshlayout     : "androidx.swiperefreshlayout:swiperefreshlayout:$swiperefreshlayoutVersion",
+            swiperefreshlayout      : "androidx.swiperefreshlayout:swiperefreshlayout:$swiperefreshlayoutVersion",
 
             room                    : "androidx.room:room-runtime:$roomVersion",
             roomCompiler            : "androidx.room:room-compiler:$roomVersion",
@@ -83,6 +84,7 @@ ext {
 
     testLibraries = [
             junit       : "junit:junit:$junitVersion",
+            testRunner  : "androidx.test:runner:$testRunnerVersion",
             extJunit    : "androidx.test.ext:junit:$extJunitVersion",
             espressoCore: "androidx.test.espresso:espresso-core:$espressoCoreVersion"
     ]
