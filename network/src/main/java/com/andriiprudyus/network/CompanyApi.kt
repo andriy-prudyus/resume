@@ -1,6 +1,6 @@
-package com.andriiprudyus.myresume.network
+package com.andriiprudyus.network
 
-import com.andriiprudyus.myresume.network.model.GistResponse
+import com.andriiprudyus.network.model.GistResponse
 import io.reactivex.Single
 import retrofit2.Response
 import retrofit2.http.GET

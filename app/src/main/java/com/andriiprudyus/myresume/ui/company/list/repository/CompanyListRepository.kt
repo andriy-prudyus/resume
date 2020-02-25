@@ -1,6 +1,5 @@
 package com.andriiprudyus.myresume.ui.company.list.repository
 
-import com.andriiprudyus.myresume.converter.toCompaniesWithRelations
 import com.andriiprudyus.database.CompanyWithRelations
 import com.andriiprudyus.database.DbMediator
 import com.andriiprudyus.database.achievement.DbAchievement
@@ -8,9 +7,10 @@ import com.andriiprudyus.database.company.Company
 import com.andriiprudyus.database.company.DbCompany
 import com.andriiprudyus.database.responsibility.DbResponsibility
 import com.andriiprudyus.database.role.DbRole
-import com.andriiprudyus.myresume.network.RestClientMediator
-import com.andriiprudyus.myresume.network.model.CompanyDto
+import com.andriiprudyus.myresume.converter.toCompaniesWithRelations
 import com.andriiprudyus.myresume.sharedPreferences.CompanySharedPreferences
+import com.andriiprudyus.network.RestClientMediator
+import com.andriiprudyus.network.model.CompanyDto
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import io.reactivex.Completable

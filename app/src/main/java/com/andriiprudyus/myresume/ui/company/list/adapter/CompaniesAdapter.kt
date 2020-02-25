@@ -5,9 +5,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.andriiprudyus.database.company.Company
 import com.andriiprudyus.myresume.R
 import com.andriiprudyus.myresume.base.adapter.BaseViewHolder
-import com.andriiprudyus.database.company.Company
 import com.andriiprudyus.myresume.utils.formattedDate
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions

@@ -27,7 +27,7 @@ android {
 dependencies {
     implementation libraries.kotlin
 
-    androidTestImplementation testLibraries.junit
+    testImplementation testLibraries.junit
     androidTestImplementation testLibraries.extJunit
     androidTestImplementation testLibraries.testRunner
 }

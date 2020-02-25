@@ -29,6 +29,7 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     implementation project(":database")
+    implementation project(":network")
 
     implementation libraries.kotlin
     implementation libraries.appCompat
@@ -46,17 +47,12 @@ dependencies {
 
     implementation libraries.glide
 
-    implementation libraries.retrofit
-    implementation libraries.retrofitConverterGson
-    implementation libraries.retrofit2AdapterRxJava2
-
-    implementation libraries.okhttpLoggingInterceptor
-    implementation libraries.okhttpProfiler
-
     implementation libraries.rxJava
     implementation libraries.rxAndroid
 
-    testImplementation testLibraries.junit
-    androidTestImplementation testLibraries.extJunit
+    implementation libraries.retrofit
+
+    implementation libraries.timber
+
     androidTestImplementation testLibraries.espressoCore
 }

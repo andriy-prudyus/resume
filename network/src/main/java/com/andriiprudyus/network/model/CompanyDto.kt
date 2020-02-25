@@ -1,4 +1,4 @@
-package com.andriiprudyus.myresume.network.model
+package com.andriiprudyus.network.model
 
 import com.google.gson.annotations.SerializedName
 

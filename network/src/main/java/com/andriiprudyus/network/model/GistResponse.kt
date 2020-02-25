@@ -1,3 +1,3 @@
-package com.andriiprudyus.myresume.network.model
+package com.andriiprudyus.network.model
 
 data class GistResponse(val files: Map<String, FileDto>)

@@ -2,14 +2,14 @@ package com.andriiprudyus.myresume.ui.company.list.viewModel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.andriiprudyus.database.company.Company
 import com.andriiprudyus.myresume.base.viewModel.BaseViewModel
 import com.andriiprudyus.myresume.base.viewModel.State
-import com.andriiprudyus.database.company.Company
 import com.andriiprudyus.myresume.di.Injector
-import com.andriiprudyus.myresume.log.AppLog
 import com.andriiprudyus.myresume.ui.company.list.repository.CompanyListRepository
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import timber.log.Timber
 
 class CompanyListViewModel(
     private val repository: CompanyListRepository = Injector.companyListRepository
@@ -27,7 +27,7 @@ class CompanyListViewModel(
             .subscribe({
                 companyList.value = State.Success(it)
             }, {
-                AppLog.e(it)
+                Timber.e(it)
                 companyList.value = State.Failure(it)
             })
             .also {
@@ -49,7 +49,7 @@ class CompanyListViewModel(
                     result.value = State.Success(Any())
                     companyList.value = State.Success(it)
                 }, {
-                    AppLog.e(it)
+                    Timber.e(it)
                     result.value = State.Failure(it)
                 })
                 .also {

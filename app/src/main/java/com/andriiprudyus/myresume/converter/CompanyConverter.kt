@@ -6,8 +6,8 @@ import com.andriiprudyus.database.achievement.DbAchievement
 import com.andriiprudyus.database.company.DbCompany
 import com.andriiprudyus.database.responsibility.DbResponsibility
 import com.andriiprudyus.database.role.DbRole
-import com.andriiprudyus.myresume.network.model.CompanyDto
-import com.andriiprudyus.myresume.network.model.RoleDto
+import com.andriiprudyus.network.model.CompanyDto
+import com.andriiprudyus.network.model.RoleDto
 
 fun List<CompanyDto>.toCompaniesWithRelations(): List<CompanyWithRelations> {
     return map {
