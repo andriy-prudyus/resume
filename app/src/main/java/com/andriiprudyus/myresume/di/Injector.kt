@@ -1,11 +1,11 @@
 package com.andriiprudyus.myresume.di
 
 import android.app.Application
-import com.andriiprudyus.myresume.db.DbMediator
-import com.andriiprudyus.myresume.network.RestClientMediator
+import com.andriiprudyus.database.DbMediator
 import com.andriiprudyus.myresume.sharedPreferences.CompanySharedPreferences
 import com.andriiprudyus.myresume.ui.company.details.repository.CompanyDetailsRepository
 import com.andriiprudyus.myresume.ui.company.list.repository.CompanyListRepository
+import com.andriiprudyus.network.RestClientMediator
 import java.util.*
 
 object Injector {

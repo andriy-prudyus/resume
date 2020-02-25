@@ -10,11 +10,11 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.andriiprudyus.database.company.Company
 import com.andriiprudyus.myresume.R
 import com.andriiprudyus.myresume.base.adapter.ItemsDecoration
 import com.andriiprudyus.myresume.base.viewModel.ResultObserver
 import com.andriiprudyus.myresume.base.viewModel.State
-import com.andriiprudyus.myresume.db.company.Company
 import com.andriiprudyus.myresume.ui.company.list.adapter.CompaniesAdapter
 import com.andriiprudyus.myresume.ui.company.list.viewModel.CompanyListViewModel
 import com.google.android.material.snackbar.Snackbar

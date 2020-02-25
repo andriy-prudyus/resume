@@ -42,8 +42,10 @@ ext {
     rxJavaVersion = "2.2.10"
     gsonVersion = "2.8.6"
     glideVersion = "4.9.0"
+    timberVersion = "4.7.1"
 
     junitVersion = "4.12"
+    testRunnerVersion = "1.2.0"
     extJunitVersion = "1.1.1"
     espressoCoreVersion = "3.2.0"
 
@@ -61,7 +63,7 @@ ext {
 
             lifecycleExtensions     : "androidx.lifecycle:lifecycle-extensions:$lifecycleExtensionsVersion",
 
-            swiperefreshlayout     : "androidx.swiperefreshlayout:swiperefreshlayout:$swiperefreshlayoutVersion",
+            swiperefreshlayout      : "androidx.swiperefreshlayout:swiperefreshlayout:$swiperefreshlayoutVersion",
 
             room                    : "androidx.room:room-runtime:$roomVersion",
             roomCompiler            : "androidx.room:room-compiler:$roomVersion",
@@ -79,10 +81,13 @@ ext {
             okhttpProfiler          : "com.itkacher.okhttpprofiler:okhttpprofiler:$okhttpprofilerVersion",
             rxAndroid               : "io.reactivex.rxjava2:rxandroid:$rxAndroidVersion",
             rxJava                  : "io.reactivex.rxjava2:rxjava:$rxJavaVersion",
+
+            timber                  : "com.jakewharton.timber:timber:$timberVersion",
     ]
 
     testLibraries = [
             junit       : "junit:junit:$junitVersion",
+            testRunner  : "androidx.test:runner:$testRunnerVersion",
             extJunit    : "androidx.test.ext:junit:$extJunitVersion",
             espressoCore: "androidx.test.espresso:espresso-core:$espressoCoreVersion"
     ]

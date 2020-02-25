@@ -1,0 +1,27 @@
+apply plugin: 'com.android.library'
+
+apply from: "$rootDir/android.gradle"
+
+android {
+    defaultConfig {
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [
+                        "room.schemaLocation"  : "$projectDir/schemas".toString(),
+                        "room.incremental"     : "true",
+                        "room.expandProjection": "true"
+                ]
+            }
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation libraries.room
+    implementation libraries.roomRxJava2
+    kapt libraries.roomCompiler
+
+    implementation libraries.gson
+}

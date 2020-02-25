@@ -1,42 +1,14 @@
 apply plugin: 'com.android.application'
 
-apply plugin: 'kotlin-android'
-
-apply plugin: 'kotlin-android-extensions'
-
-apply plugin: 'kotlin-kapt'
+apply from: "$rootDir/android.gradle"
 
 apply plugin: "androidx.navigation.safeargs"
 
 android {
-    compileSdkVersion 28
-
     defaultConfig {
         applicationId "com.andriiprudyus.myresume"
-        minSdkVersion 21
-        targetSdkVersion 28
         versionCode 1
         versionName "1.0"
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-
-        javaCompileOptions {
-            annotationProcessorOptions {
-                arguments = [
-                        "room.schemaLocation" : "$projectDir/schemas".toString(),
-                        "room.incremental" : "true",
-                        "room.expandProjection" : "true"
-                ]
-            }
-        }
-    }
-
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
-
-    kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_1_8.toString()
     }
 
     buildTypes {
@@ -55,6 +27,10 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation project(":database")
+    implementation project(":network")
+
     implementation libraries.kotlin
     implementation libraries.appCompat
     implementation libraries.core
@@ -67,25 +43,16 @@ dependencies {
     implementation libraries.navigationFragmentKtx
     implementation libraries.navigationUiKtx
 
-    implementation libraries.room
-    implementation libraries.roomRxJava2
-    kapt libraries.roomCompiler
-
     implementation libraries.gson
 
     implementation libraries.glide
 
-    implementation libraries.retrofit
-    implementation libraries.retrofitConverterGson
-    implementation libraries.retrofit2AdapterRxJava2
-
-    implementation libraries.okhttpLoggingInterceptor
-    implementation libraries.okhttpProfiler
-
     implementation libraries.rxJava
     implementation libraries.rxAndroid
 
-    testImplementation testLibraries.junit
-    androidTestImplementation testLibraries.extJunit
+    implementation libraries.retrofit
+
+    implementation libraries.timber
+
     androidTestImplementation testLibraries.espressoCore
 }

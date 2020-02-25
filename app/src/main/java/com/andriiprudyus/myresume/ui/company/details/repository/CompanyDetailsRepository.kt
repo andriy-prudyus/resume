@@ -1,9 +1,9 @@
 package com.andriiprudyus.myresume.ui.company.details.repository
 
-import com.andriiprudyus.myresume.db.DbMediator
-import com.andriiprudyus.myresume.db.achievement.Achievement
-import com.andriiprudyus.myresume.db.responsibility.Responsibility
-import com.andriiprudyus.myresume.db.role.Role
+import com.andriiprudyus.database.DbMediator
+import com.andriiprudyus.database.achievement.Achievement
+import com.andriiprudyus.database.responsibility.Responsibility
+import com.andriiprudyus.database.role.Role
 import io.reactivex.Single
 
 class CompanyDetailsRepository(private val dbMediator: DbMediator) {

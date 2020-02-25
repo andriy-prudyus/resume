@@ -1,13 +1,13 @@
 package com.andriiprudyus.myresume.converter
 
-import com.andriiprudyus.myresume.db.CompanyWithRelations
-import com.andriiprudyus.myresume.db.RoleWithRelations
-import com.andriiprudyus.myresume.db.achievement.DbAchievement
-import com.andriiprudyus.myresume.db.company.DbCompany
-import com.andriiprudyus.myresume.db.responsibility.DbResponsibility
-import com.andriiprudyus.myresume.db.role.DbRole
-import com.andriiprudyus.myresume.network.model.CompanyDto
-import com.andriiprudyus.myresume.network.model.RoleDto
+import com.andriiprudyus.database.CompanyWithRelations
+import com.andriiprudyus.database.RoleWithRelations
+import com.andriiprudyus.database.achievement.DbAchievement
+import com.andriiprudyus.database.company.DbCompany
+import com.andriiprudyus.database.responsibility.DbResponsibility
+import com.andriiprudyus.database.role.DbRole
+import com.andriiprudyus.network.model.CompanyDto
+import com.andriiprudyus.network.model.RoleDto
 
 fun List<CompanyDto>.toCompaniesWithRelations(): List<CompanyWithRelations> {
     return map {
