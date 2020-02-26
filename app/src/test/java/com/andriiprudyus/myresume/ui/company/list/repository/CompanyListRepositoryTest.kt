@@ -65,7 +65,7 @@ class CompanyListRepositoryTest {
               {
                 "company_name": "Google",
                 "logo_url": "https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png",
-                "summary": "Developed good mobile application, gained experience",
+                "summary": "Developed good mobile applications, gained experience",
                 "roles": [
                   {
                     "role_name": "Android Developer",
@@ -126,87 +126,87 @@ class CompanyListRepositoryTest {
     private lateinit var repository: CompanyListRepository
 
     @Mock
-    private lateinit var mockedRestClientMediator: RestClientMediator
+    private lateinit var mockRestClientMediator: RestClientMediator
 
     @Mock
-    private lateinit var mockedDbMediator: DbMediator
+    private lateinit var mockDbMediator: DbMediator
 
     @Mock
-    private lateinit var mockedSharedPreferences: CompanySharedPreferences
+    private lateinit var mockSharedPreferences: CompanySharedPreferences
 
     @Mock
-    private lateinit var mockedCalendar: Calendar
+    private lateinit var mockCalendar: Calendar
 
     @Mock
-    private lateinit var mockedCompanyDao: CompanyDao
+    private lateinit var mockCompanyDao: CompanyDao
 
     @Mock
-    private lateinit var mockedCompanyApi: CompanyApi
+    private lateinit var mockCompanyApi: CompanyApi
 
     @Before
     fun init() {
         repository = CompanyListRepository(
-            mockedRestClientMediator,
-            mockedDbMediator,
-            mockedSharedPreferences,
-            mockedCalendar
+            mockRestClientMediator,
+            mockDbMediator,
+            mockSharedPreferences,
+            mockCalendar
         )
     }
 
     @Test
     fun loadCompanies_cache() {
-        `when`(mockedSharedPreferences.lastLoadDataTimestamp).thenReturn(1582669538000)
-        `when`(mockedCalendar.timeInMillis).thenReturn(1582669538100)
-        `when`(mockedDbMediator.companyDao).thenReturn(mockedCompanyDao)
-        `when`(mockedCompanyDao.selectCompanies()).thenReturn(Single.just(companies))
+        `when`(mockSharedPreferences.lastLoadDataTimestamp).thenReturn(1582669538000)
+        `when`(mockCalendar.timeInMillis).thenReturn(1582669538100)
+        `when`(mockDbMediator.companyDao).thenReturn(mockCompanyDao)
+        `when`(mockCompanyDao.selectCompanies()).thenReturn(Single.just(companies))
 
         repository.loadCompanies()
             .test()
             .assertValue(companies)
             .assertComplete()
 
-        verify(mockedCompanyDao).selectCompanies()
-        verify(mockedCompanyDao, never()).delete()
+        verify(mockCompanyDao).selectCompanies()
+        verify(mockCompanyDao, never()).delete()
     }
 
     @Test
     fun loadCompanies_noCache_success() {
         val response = GistResponse(mapOf("Companies.json" to FileDto(content)))
 
-        `when`(mockedSharedPreferences.lastLoadDataTimestamp).thenReturn(1582583137000)
-        `when`(mockedCalendar.timeInMillis).thenReturn(1582669538100)
-        `when`(mockedRestClientMediator.companyApi).thenReturn(mockedCompanyApi)
-        `when`(mockedCompanyApi.loadCompanies()).thenReturn(Single.just(Response.success(response)))
-        `when`(mockedDbMediator.companyDao).thenReturn(mockedCompanyDao)
-        `when`(mockedCompanyDao.delete()).thenReturn(Completable.complete())
-        `when`(mockedCompanyDao.selectCompanies()).thenReturn(Single.just(companies))
+        `when`(mockSharedPreferences.lastLoadDataTimestamp).thenReturn(1582583137000)
+        `when`(mockCalendar.timeInMillis).thenReturn(1582669538100)
+        `when`(mockRestClientMediator.companyApi).thenReturn(mockCompanyApi)
+        `when`(mockCompanyApi.loadCompanies()).thenReturn(Single.just(Response.success(response)))
+        `when`(mockDbMediator.companyDao).thenReturn(mockCompanyDao)
+        `when`(mockCompanyDao.delete()).thenReturn(Completable.complete())
+        `when`(mockCompanyDao.selectCompanies()).thenReturn(Single.just(companies))
 
         repository.loadCompanies()
             .test()
             .assertValue(companies)
             .assertComplete()
 
-        verify(mockedCompanyApi).loadCompanies()
-        verify(mockedCompanyDao).delete()
-        verify(mockedCompanyDao).selectCompanies()
+        verify(mockCompanyApi).loadCompanies()
+        verify(mockCompanyDao).delete()
+        verify(mockCompanyDao).selectCompanies()
     }
 
     @Test
     fun loadCompanies_noCache_failure() {
         val response = GistResponse(mapOf("File.json" to FileDto(content)))
 
-        `when`(mockedSharedPreferences.lastLoadDataTimestamp).thenReturn(1582583137000)
-        `when`(mockedCalendar.timeInMillis).thenReturn(1582669538100)
-        `when`(mockedRestClientMediator.companyApi).thenReturn(mockedCompanyApi)
-        `when`(mockedCompanyApi.loadCompanies()).thenReturn(Single.just(Response.success(response)))
+        `when`(mockSharedPreferences.lastLoadDataTimestamp).thenReturn(1582583137000)
+        `when`(mockCalendar.timeInMillis).thenReturn(1582669538100)
+        `when`(mockRestClientMediator.companyApi).thenReturn(mockCompanyApi)
+        `when`(mockCompanyApi.loadCompanies()).thenReturn(Single.just(Response.success(response)))
 
         repository.loadCompanies()
             .test()
             .assertNotComplete()
 
-        verify(mockedCompanyApi).loadCompanies()
-        verify(mockedCompanyDao, never()).delete()
-        verify(mockedCompanyDao, never()).selectCompanies()
+        verify(mockCompanyApi).loadCompanies()
+        verify(mockCompanyDao, never()).delete()
+        verify(mockCompanyDao, never()).selectCompanies()
     }
 
     @Test

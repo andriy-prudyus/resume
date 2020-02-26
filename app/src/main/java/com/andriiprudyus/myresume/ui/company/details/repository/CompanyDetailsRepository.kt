@@ -1,8 +1,8 @@
 package com.andriiprudyus.myresume.ui.company.details.repository
 
 import com.andriiprudyus.database.DbMediator
-import com.andriiprudyus.database.achievement.Achievement
-import com.andriiprudyus.database.responsibility.Responsibility
+import com.andriiprudyus.database.achievement.DbAchievement
+import com.andriiprudyus.database.responsibility.DbResponsibility
 import com.andriiprudyus.database.role.DbRole
 import io.reactivex.Single
 
@@ -16,11 +16,11 @@ class CompanyDetailsRepository(private val dbMediator: DbMediator) {
         return dbMediator.roleDao.select(companyName)
     }
 
-    fun loadResponsibilities(companyName: String): Single<List<Responsibility>> {
+    fun loadResponsibilities(companyName: String): Single<List<DbResponsibility>> {
         return dbMediator.responsibilityDao.select(companyName)
     }
 
-    fun loadAchievements(companyName: String): Single<List<Achievement>> {
+    fun loadAchievements(companyName: String): Single<List<DbAchievement>> {
         return dbMediator.achievementDao.select(companyName)
     }
 }
