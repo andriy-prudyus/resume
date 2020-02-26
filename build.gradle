@@ -49,6 +49,7 @@ ext {
     extJunitVersion = "1.1.1"
     espressoCoreVersion = "3.2.0"
     mockitoVersion = "3.3.0"
+    archCoreTestingVersion = "2.1.0"
 
     libraries = [
             kotlin                  : "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version",
@@ -87,10 +88,11 @@ ext {
     ]
 
     testLibraries = [
-            junit       : "junit:junit:$junitVersion",
-            testRunner  : "androidx.test:runner:$testRunnerVersion",
-            extJunit    : "androidx.test.ext:junit:$extJunitVersion",
-            espressoCore: "androidx.test.espresso:espresso-core:$espressoCoreVersion",
-            mockito     : "org.mockito:mockito-core:$mockitoVersion"
+            junit           : "junit:junit:$junitVersion",
+            testRunner      : "androidx.test:runner:$testRunnerVersion",
+            extJunit        : "androidx.test.ext:junit:$extJunitVersion",
+            espressoCore    : "androidx.test.espresso:espresso-core:$espressoCoreVersion",
+            mockito         : "org.mockito:mockito-core:$mockitoVersion",
+            archCoreTesting : "androidx.arch.core:core-testing:$archCoreTestingVersion"
     ]
 }
