@@ -55,5 +55,6 @@ dependencies {
     implementation libraries.timber
 
     testImplementation testLibraries.mockito
+    testImplementation testLibraries.archCoreTesting
     androidTestImplementation testLibraries.espressoCore
 }
