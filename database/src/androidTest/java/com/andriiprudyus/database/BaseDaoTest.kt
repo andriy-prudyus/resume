@@ -9,8 +9,8 @@ import com.andriiprudyus.database.achievement.DbAchievement
 import com.andriiprudyus.database.company.DbCompany
 import com.andriiprudyus.database.responsibility.DbResponsibility
 import com.andriiprudyus.database.role.DbRole
-import com.andriiprudyus.database.utils.fromJson
 import com.andriiprudyus.database.test.R
+import com.andriiprudyus.database.utils.fromJson
 import com.google.gson.reflect.TypeToken
 import org.junit.After
 import org.junit.Before

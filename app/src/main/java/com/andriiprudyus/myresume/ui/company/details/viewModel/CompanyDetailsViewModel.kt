@@ -2,9 +2,9 @@ package com.andriiprudyus.myresume.ui.company.details.viewModel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.andriiprudyus.database.achievement.Achievement
-import com.andriiprudyus.database.responsibility.Responsibility
-import com.andriiprudyus.database.role.Role
+import com.andriiprudyus.database.achievement.DbAchievement
+import com.andriiprudyus.database.responsibility.DbResponsibility
+import com.andriiprudyus.database.role.DbRole
 import com.andriiprudyus.myresume.base.viewModel.BaseViewModel
 import com.andriiprudyus.myresume.base.viewModel.State
 import com.andriiprudyus.myresume.di.Injector
@@ -34,12 +34,12 @@ class CompanyDetailsViewModel(
             repository.loadRoles(companyName),
             repository.loadResponsibilities(companyName),
             repository.loadAchievements(companyName),
-            Function4<String, List<Role>, List<Responsibility>, List<Achievement>, List<RolesAdapter.Item>> { summary, roles, responsibilities, achievements ->
+            Function4<String, List<DbRole>, List<DbResponsibility>, List<DbAchievement>, List<RolesAdapter.Item>> { summary, roles, responsibilities, achievements ->
                 val items = mutableListOf<RolesAdapter.Item>()
                 items.add(RolesAdapter.Item.Summary(summary))
 
                 roles.forEach { role ->
-                    items.add(RolesAdapter.Item.Role(role.roleName, role.startedAt, role.endedAt))
+                    items.add(RolesAdapter.Item.Role(role))
 
                     items.addAll(
                         responsibilities
