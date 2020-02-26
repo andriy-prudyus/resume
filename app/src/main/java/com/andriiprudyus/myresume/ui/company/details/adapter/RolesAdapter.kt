@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
+import com.andriiprudyus.database.role.DbRole
 import com.andriiprudyus.myresume.R
 import com.andriiprudyus.myresume.base.adapter.BaseViewHolder
 import com.andriiprudyus.myresume.utils.formattedDate
@@ -31,9 +32,7 @@ class RolesAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         ) : Item()
 
         data class Role(
-            val roleName: String,
-            val startedAt: Long,
-            val endedAt: Long
+            val role: DbRole
         ) : Item()
 
         data class Responsibility(
@@ -127,11 +126,11 @@ class RolesAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
         override fun onBindView(item: Item.Role) {
             itemView.apply {
-                roleNameTextView.text = item.roleName
+                roleNameTextView.text = item.role.roleName
 
                 durationTextView.text = "%s - %s".format(
-                    formattedDate(item.startedAt),
-                    formattedDate(item.endedAt)
+                    formattedDate(item.role.startedAt),
+                    formattedDate(item.role.endedAt)
                 )
             }
         }

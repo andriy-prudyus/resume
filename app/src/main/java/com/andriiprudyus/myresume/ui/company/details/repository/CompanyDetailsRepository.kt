@@ -3,7 +3,7 @@ package com.andriiprudyus.myresume.ui.company.details.repository
 import com.andriiprudyus.database.DbMediator
 import com.andriiprudyus.database.achievement.Achievement
 import com.andriiprudyus.database.responsibility.Responsibility
-import com.andriiprudyus.database.role.Role
+import com.andriiprudyus.database.role.DbRole
 import io.reactivex.Single
 
 class CompanyDetailsRepository(private val dbMediator: DbMediator) {
@@ -12,7 +12,7 @@ class CompanyDetailsRepository(private val dbMediator: DbMediator) {
         return dbMediator.companyDao.selectSummary(companyName)
     }
 
-    fun loadRoles(companyName: String): Single<List<Role>> {
+    fun loadRoles(companyName: String): Single<List<DbRole>> {
         return dbMediator.roleDao.select(companyName)
     }
 
