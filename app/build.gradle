@@ -56,5 +56,6 @@ dependencies {
 
     testImplementation testLibraries.mockito
     testImplementation testLibraries.archCoreTesting
+
     androidTestImplementation testLibraries.espressoCore
 }

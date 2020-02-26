@@ -5,11 +5,11 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 29
 
     defaultConfig {
         minSdkVersion 21
-        targetSdkVersion 28
+        targetSdkVersion 29
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -28,6 +28,8 @@ dependencies {
     implementation libraries.kotlin
 
     testImplementation testLibraries.junit
+    testImplementation testLibraries.truth
+
     androidTestImplementation testLibraries.extJunit
     androidTestImplementation testLibraries.testRunner
 }
