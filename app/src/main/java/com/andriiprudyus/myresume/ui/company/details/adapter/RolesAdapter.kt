@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.andriiprudyus.database.role.DbRole
 import com.andriiprudyus.myresume.R
 import com.andriiprudyus.myresume.base.adapter.BaseViewHolder
-import com.andriiprudyus.myresume.utils.formattedDate
+import com.andriiprudyus.utils.formattedDate
 import kotlinx.android.synthetic.main.list_item_company_details_achievement.view.*
 import kotlinx.android.synthetic.main.list_item_company_details_responsibility.view.*
 import kotlinx.android.synthetic.main.list_item_company_details_role.view.*

@@ -30,6 +30,7 @@ dependencies {
 
     implementation project(":database")
     implementation project(":network")
+    implementation project(":utils")
 
     implementation libraries.kotlin
     implementation libraries.appCompat

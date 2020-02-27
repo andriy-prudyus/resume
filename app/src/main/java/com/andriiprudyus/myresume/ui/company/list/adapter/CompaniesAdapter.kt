@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.andriiprudyus.database.company.Company
 import com.andriiprudyus.myresume.R
 import com.andriiprudyus.myresume.base.adapter.BaseViewHolder
-import com.andriiprudyus.myresume.utils.formattedDate
+import com.andriiprudyus.utils.formattedDate
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import kotlinx.android.synthetic.main.list_item_company.view.*
