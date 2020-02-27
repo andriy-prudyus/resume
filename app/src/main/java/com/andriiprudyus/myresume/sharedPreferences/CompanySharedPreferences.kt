@@ -2,6 +2,7 @@ package com.andriiprudyus.myresume.sharedPreferences
 
 import android.content.Context
 import android.content.Context.MODE_PRIVATE
+import com.andriiprudyus.myresume.base.sharedPreferences.BaseSharedPreferences
 
 class CompanySharedPreferences(
     context: Context
