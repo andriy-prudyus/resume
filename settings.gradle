@@ -1,2 +1,2 @@
-include ':app', ':database', ':network'
+include ':app', ':database', ':network', ':utils'
 rootProject.name='My Resume'

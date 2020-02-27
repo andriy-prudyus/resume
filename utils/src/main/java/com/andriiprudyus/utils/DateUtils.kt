@@ -1,4 +1,4 @@
-package com.andriiprudyus.myresume.utils
+package com.andriiprudyus.utils
 
 import java.text.DateFormat
 import java.util.*
