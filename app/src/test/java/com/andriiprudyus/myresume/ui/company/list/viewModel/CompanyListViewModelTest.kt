@@ -1,4 +1,4 @@
-package com.andriiprudyus.myresume.ui.company.list
+package com.andriiprudyus.myresume.ui.company.list.viewModel
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.andriiprudyus.database.company.Company

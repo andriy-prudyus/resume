@@ -55,6 +55,7 @@ ext {
     mockitoVersion = "3.3.0"
     archCoreTestingVersion = "2.1.0"
     truthVersion = "1.0.1"
+    fragmentTestingVersion = "1.2.2"
 
     libraries = [
             kotlin                  : "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version",
@@ -100,6 +101,8 @@ ext {
             espressoCore    : "androidx.test.espresso:espresso-core:$espressoCoreVersion",
             mockito         : "org.mockito:mockito-core:$mockitoVersion",
             archCoreTesting : "androidx.arch.core:core-testing:$archCoreTestingVersion",
-            truth           : "com.google.truth:truth:$truthVersion"
+            truth           : "com.google.truth:truth:$truthVersion",
+
+            fragmentTesting : "androidx.fragment:fragment-testing:$fragmentTestingVersion"
     ]
 }
