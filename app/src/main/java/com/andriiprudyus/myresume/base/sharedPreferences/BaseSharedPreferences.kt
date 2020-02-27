@@ -1,4 +1,4 @@
-package com.andriiprudyus.myresume.sharedPreferences
+package com.andriiprudyus.myresume.base.sharedPreferences
 
 import android.content.Context
 import android.content.SharedPreferences
