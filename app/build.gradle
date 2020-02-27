@@ -59,4 +59,6 @@ dependencies {
     testImplementation testLibraries.archCoreTesting
 
     androidTestImplementation testLibraries.espressoCore
+
+    debugImplementation testLibraries.fragmentTesting
 }
