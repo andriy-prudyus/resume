@@ -8,6 +8,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.andriiprudyus.database.company.Company
@@ -15,14 +16,17 @@ import com.andriiprudyus.myresume.R
 import com.andriiprudyus.myresume.base.adapter.ItemsDecoration
 import com.andriiprudyus.myresume.base.viewModel.ResultObserver
 import com.andriiprudyus.myresume.base.viewModel.State
+import com.andriiprudyus.myresume.di.Injector
 import com.andriiprudyus.myresume.ui.company.list.adapter.CompaniesAdapter
 import com.andriiprudyus.myresume.ui.company.list.viewModel.CompanyListViewModel
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_company_list.*
 
-class CompanyListFragment : Fragment(), CompaniesAdapter.ActionListener {
+class CompanyListFragment(
+    private val viewModelFactory: ViewModelProvider.Factory = Injector.companyListViewModelFactory
+) : Fragment(), CompaniesAdapter.ActionListener {
 
-    private val viewModel by viewModels<CompanyListViewModel>()
+    private val viewModel by viewModels<CompanyListViewModel> { viewModelFactory }
 
     override fun onCreateView(
         inflater: LayoutInflater,

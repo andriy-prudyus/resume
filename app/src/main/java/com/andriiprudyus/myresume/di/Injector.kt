@@ -5,6 +5,7 @@ import com.andriiprudyus.database.DbMediator
 import com.andriiprudyus.myresume.sharedPreferences.CompanySharedPreferences
 import com.andriiprudyus.myresume.ui.company.details.repository.CompanyDetailsRepository
 import com.andriiprudyus.myresume.ui.company.list.repository.CompanyListRepository
+import com.andriiprudyus.myresume.ui.company.list.viewModel.CompanyListViewModelFactory
 import com.andriiprudyus.network.RestClientMediator
 import java.util.*
 
@@ -16,6 +17,7 @@ object Injector {
     lateinit var restClientMediator: RestClientMediator
     lateinit var companyListRepository: CompanyListRepository
     lateinit var companyDetailsRepository: CompanyDetailsRepository
+    lateinit var companyListViewModelFactory: CompanyListViewModelFactory
 
     fun init(application: Application) {
         this.application = application
@@ -23,12 +25,12 @@ object Injector {
         dbMediator = DbMediator(application)
         restClientMediator = RestClientMediator()
         companyDetailsRepository = CompanyDetailsRepository(dbMediator)
-
         companyListRepository = CompanyListRepository(
             restClientMediator,
             dbMediator,
             companySharedPreferences,
             Calendar.getInstance()
         )
+        companyListViewModelFactory = CompanyListViewModelFactory()
     }
 }

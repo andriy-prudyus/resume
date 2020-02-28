@@ -56,9 +56,14 @@ dependencies {
     implementation libraries.timber
 
     testImplementation testLibraries.mockito
+    testImplementation testLibraries.dexMakerInlineMockito
     testImplementation testLibraries.archCoreTesting
 
     androidTestImplementation testLibraries.espressoCore
+    androidTestImplementation testLibraries.espressoContrib
+    androidTestImplementation testLibraries.mockito
+    androidTestImplementation testLibraries.dexMakerInlineMockito
+    androidTestImplementation testLibraries.navigationTesting
 
     debugImplementation testLibraries.fragmentTesting
 }
