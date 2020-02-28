@@ -18,7 +18,6 @@ allprojects {
     repositories {
         google()
         jcenter()
-
     }
 }
 
@@ -27,35 +26,36 @@ task clean(type: Delete) {
 }
 
 ext {
-    appCompatVersion = "1.1.0"
-    coreVersion = "1.2.0"
-    materialVersion = "1.1.0"
-    constraintLayoutVersion = "1.1.3"
-    swiperefreshlayoutVersion = "1.0.0"
-    navigationVersion = "2.2.1"
-    lifecycleExtensionsVersion = "2.2.0"
-    roomVersion = "2.2.4"
+    appCompatVersion                = "1.1.0"
+    coreVersion                     = "1.2.0"
+    materialVersion                 = "1.1.0"
+    constraintLayoutVersion         = "1.1.3"
+    swiperefreshlayoutVersion       = "1.0.0"
+    navigationVersion               = "2.3.0-alpha02"
+    lifecycleExtensionsVersion      = "2.2.0"
+    roomVersion                     = "2.2.4"
 
-    rxAndroidVersion = "2.1.1"
-    rxJavaVersion = "2.2.10"
+    rxAndroidVersion                = "2.1.1"
+    rxJavaVersion                   = "2.2.10"
 
-    gsonVersion = "2.8.6"
-    glideVersion = "4.11.0"
+    gsonVersion                     = "2.8.6"
+    glideVersion                    = "4.11.0"
 
-    retrofitVersion = "2.7.1"
-    loggingInterceptorVersion = "4.4.0"
-    okhttpprofilerVersion = "1.0.5"
+    retrofitVersion                 = "2.7.1"
+    loggingInterceptorVersion       = "4.4.0"
+    okhttpprofilerVersion           = "1.0.5"
 
-    timberVersion = "4.7.1"
+    timberVersion                   = "4.7.1"
 
-    junitVersion = "4.12"
-    testRunnerVersion = "1.2.0"
-    extJunitVersion = "1.1.1"
-    espressoCoreVersion = "3.2.0"
-    mockitoVersion = "3.3.0"
-    archCoreTestingVersion = "2.1.0"
-    truthVersion = "1.0.1"
-    fragmentTestingVersion = "1.2.2"
+    junitVersion                    = "4.12"
+    testRunnerVersion               = "1.2.0"
+    extJunitVersion                 = "1.1.1"
+    espressoVersion                 = "3.2.0"
+    mockitoVersion                  = "3.3.0"
+    dexMakerInlineMockitoVersion    = "2.25.1"
+    archCoreTestingVersion          = "2.1.0"
+    truthVersion                    = "1.0.1"
+    fragmentTestingVersion          = "1.2.2"
 
     libraries = [
             kotlin                  : "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version",
@@ -95,14 +95,18 @@ ext {
     ]
 
     testLibraries = [
-            junit           : "junit:junit:$junitVersion",
-            testRunner      : "androidx.test:runner:$testRunnerVersion",
-            extJunit        : "androidx.test.ext:junit:$extJunitVersion",
-            espressoCore    : "androidx.test.espresso:espresso-core:$espressoCoreVersion",
-            mockito         : "org.mockito:mockito-core:$mockitoVersion",
-            archCoreTesting : "androidx.arch.core:core-testing:$archCoreTestingVersion",
-            truth           : "com.google.truth:truth:$truthVersion",
+            junit                   : "junit:junit:$junitVersion",
+            testRunner              : "androidx.test:runner:$testRunnerVersion",
+            extJunit                : "androidx.test.ext:junit:$extJunitVersion",
+            espressoCore            : "androidx.test.espresso:espresso-core:$espressoVersion",
+            espressoContrib         : "androidx.test.espresso:espresso-contrib:$espressoVersion",
+            archCoreTesting         : "androidx.arch.core:core-testing:$archCoreTestingVersion",
+            fragmentTesting         : "androidx.fragment:fragment-testing:$fragmentTestingVersion",
+            navigationTesting       : "androidx.navigation:navigation-testing:$navigationVersion",
 
-            fragmentTesting : "androidx.fragment:fragment-testing:$fragmentTestingVersion"
+            mockito                 : "org.mockito:mockito-core:$mockitoVersion",
+            dexMakerInlineMockito   : "com.linkedin.dexmaker:dexmaker-mockito-inline:$dexMakerInlineMockitoVersion",
+
+            truth                   : "com.google.truth:truth:$truthVersion"
     ]
 }
