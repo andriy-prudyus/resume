@@ -4,6 +4,7 @@ import android.app.Application
 import com.andriiprudyus.database.DbMediator
 import com.andriiprudyus.myresume.sharedPreferences.CompanySharedPreferences
 import com.andriiprudyus.myresume.ui.company.details.repository.CompanyDetailsRepository
+import com.andriiprudyus.myresume.ui.company.details.viewModel.CompanyDetailsViewModelFactory
 import com.andriiprudyus.myresume.ui.company.list.repository.CompanyListRepository
 import com.andriiprudyus.myresume.ui.company.list.viewModel.CompanyListViewModelFactory
 import com.andriiprudyus.network.RestClientMediator
@@ -18,6 +19,7 @@ object Injector {
     lateinit var companyListRepository: CompanyListRepository
     lateinit var companyDetailsRepository: CompanyDetailsRepository
     lateinit var companyListViewModelFactory: CompanyListViewModelFactory
+    lateinit var companyDetailsViewModelFactory: CompanyDetailsViewModelFactory
 
     fun init(application: Application) {
         this.application = application
@@ -32,5 +34,6 @@ object Injector {
             Calendar.getInstance()
         )
         companyListViewModelFactory = CompanyListViewModelFactory()
+        companyDetailsViewModelFactory = CompanyDetailsViewModelFactory()
     }
 }
