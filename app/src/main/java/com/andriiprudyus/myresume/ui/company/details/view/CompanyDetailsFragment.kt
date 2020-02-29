@@ -12,22 +12,23 @@ import com.andriiprudyus.myresume.MainActivity
 import com.andriiprudyus.myresume.R
 import com.andriiprudyus.myresume.base.viewModel.ResultObserver
 import com.andriiprudyus.myresume.base.viewModel.State
+import com.andriiprudyus.myresume.di.Injector
 import com.andriiprudyus.myresume.ui.company.details.adapter.RolesAdapter
 import com.andriiprudyus.myresume.ui.company.details.viewModel.CompanyDetailsViewModel
 import com.andriiprudyus.myresume.ui.company.details.viewModel.CompanyDetailsViewModelFactory
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_company_details.*
 
-class CompanyDetailsFragment : Fragment() {
+class CompanyDetailsFragment(
+    private val viewModelFactory: CompanyDetailsViewModelFactory = Injector.companyDetailsViewModelFactory
+) : Fragment() {
 
-    private val viewModel by viewModels<CompanyDetailsViewModel>(
-        { this },
-        {
-            CompanyDetailsViewModelFactory(
+    private val viewModel by viewModels<CompanyDetailsViewModel> {
+        viewModelFactory.apply {
+            companyName =
                 arguments?.let { CompanyDetailsFragmentArgs.fromBundle(it).companyName } ?: ""
-            )
         }
-    )
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -44,7 +45,7 @@ class CompanyDetailsFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        (activity as MainActivity).supportActionBar?.title = viewModel.companyName
+        (activity as? MainActivity)?.supportActionBar?.title = viewModel.companyName
         loadData()
     }
 
@@ -61,9 +62,15 @@ class CompanyDetailsFragment : Fragment() {
                 when (state) {
                     is State.Success -> {
                         progressBar.isVisible = false
-                        noDataTextView.isVisible = false
-                        recyclerView.isVisible = true
-                        (recyclerView.adapter as RolesAdapter).replaceItems(state.data)
+
+                        if (state.data.isEmpty()) {
+                            noDataTextView.isVisible = true
+                            recyclerView.isVisible = false
+                        } else {
+                            noDataTextView.isVisible = false
+                            recyclerView.isVisible = true
+                            (recyclerView.adapter as RolesAdapter).replaceItems(state.data)
+                        }
                     }
                     is State.Failure -> {
                         progressBar.isVisible = false
