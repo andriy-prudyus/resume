@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.annotation.CallSuper
 import androidx.room.Room
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import androidx.test.filters.MediumTest
 import androidx.test.platform.app.InstrumentationRegistry
 import com.andriiprudyus.database.achievement.DbAchievement
 import com.andriiprudyus.database.company.DbCompany
@@ -17,6 +18,7 @@ import org.junit.Before
 import org.junit.runner.RunWith
 import java.io.IOException
 
+@MediumTest
 @RunWith(AndroidJUnit4::class)
 abstract class BaseDaoTest {
 
