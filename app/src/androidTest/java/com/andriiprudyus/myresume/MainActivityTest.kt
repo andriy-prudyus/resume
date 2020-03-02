@@ -22,15 +22,20 @@ class MainActivityTest {
     val activityRule = ActivityScenarioRule(MainActivity::class.java)
 
     @Test
-    fun onNavItemClicked() {
+    fun onNavItemCompaniesClicked() {
+        onView(withId(R.id.drawerLayout))
+            .check(matches(isClosed(Gravity.START)))
+            .perform(DrawerActions.open())
+
+        onView(withId(R.id.navigationView)).perform(NavigationViewActions.navigateTo(R.id.companies))
+    }
+
+    @Test
+    fun onNavItemAboutClicked() {
         onView(withId(R.id.drawerLayout))
             .check(matches(isClosed(Gravity.START)))
             .perform(DrawerActions.open())
 
         onView(withId(R.id.navigationView)).perform(NavigationViewActions.navigateTo(R.id.about))
-        Thread.sleep(1000)
-
-        onView(withId(R.id.drawerLayout)).perform(DrawerActions.open())
-        onView(withId(R.id.navigationView)).perform(NavigationViewActions.navigateTo(R.id.companies))
     }
 }
