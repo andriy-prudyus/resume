@@ -1,9 +1,7 @@
 package com.andriiprudyus.myresume.ui.company.list.view
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -24,17 +22,9 @@ import kotlinx.android.synthetic.main.fragment_company_list.*
 
 class CompanyListFragment(
     private val viewModelFactory: ViewModelProvider.Factory = Injector.companyListViewModelFactory
-) : Fragment(), CompaniesAdapter.ActionListener {
+) : Fragment(R.layout.fragment_company_list), CompaniesAdapter.ActionListener {
 
     private val viewModel by viewModels<CompanyListViewModel> { viewModelFactory }
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_company_list, container, false)
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
