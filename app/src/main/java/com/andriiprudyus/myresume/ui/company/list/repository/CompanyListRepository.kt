@@ -9,16 +9,17 @@ import com.andriiprudyus.database.responsibility.DbResponsibility
 import com.andriiprudyus.database.role.DbRole
 import com.andriiprudyus.myresume.converter.toCompaniesWithRelations
 import com.andriiprudyus.myresume.sharedPreferences.CompanySharedPreferences
-import com.andriiprudyus.network.RestClientMediator
+import com.andriiprudyus.network.CompanyService
 import com.andriiprudyus.network.model.CompanyDto
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import io.reactivex.Completable
 import io.reactivex.Single
 import java.util.*
+import javax.inject.Inject
 
-class CompanyListRepository(
-    private val restClientMediator: RestClientMediator,
+class CompanyListRepository @Inject constructor(
+    private val companyService: CompanyService,
     private val dbMediator: DbMediator,
     private val sharedPreferences: CompanySharedPreferences,
     private val calendar: Calendar
@@ -31,8 +32,8 @@ class CompanyListRepository(
 
     fun loadCompanies(): Single<List<Company>> {
         return Single.fromCallable {
-            sharedPreferences.lastLoadDataTimestamp
-        }
+                sharedPreferences.lastLoadDataTimestamp
+            }
             .flatMap {
                 if (calendar.timeInMillis - it > CACHE_EXPIRATION) {
                     loadCompaniesFromServer()
@@ -59,15 +60,15 @@ class CompanyListRepository(
 
     fun refreshCompanies(): Single<List<Company>> {
         return Single.fromCallable {
-            sharedPreferences.lastLoadDataTimestamp = 0
-        }
+                sharedPreferences.lastLoadDataTimestamp = 0
+            }
             .flatMap {
                 loadCompanies()
             }
     }
 
     private fun loadCompaniesFromServer(): Single<List<CompanyDto>> {
-        return restClientMediator.companyApi.loadCompanies()
+        return companyService.loadCompanies()
             .flatMap { response ->
                 val token = object : TypeToken<List<CompanyDto>>() {}.type
                 val content = response.body()!!.files[FILE_NAME]?.content

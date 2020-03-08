@@ -5,8 +5,9 @@ import com.andriiprudyus.database.achievement.DbAchievement
 import com.andriiprudyus.database.responsibility.DbResponsibility
 import com.andriiprudyus.database.role.DbRole
 import io.reactivex.Single
+import javax.inject.Inject
 
-class CompanyDetailsRepository(private val dbMediator: DbMediator) {
+class CompanyDetailsRepository @Inject constructor(private val dbMediator: DbMediator) {
 
     fun loadSummary(companyName: String): Single<String> {
         return dbMediator.companyDao.selectSummary(companyName)

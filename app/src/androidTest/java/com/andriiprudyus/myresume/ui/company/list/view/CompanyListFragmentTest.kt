@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentFactory
 import androidx.fragment.app.testing.launchFragmentInContainer
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import androidx.navigation.testing.TestNavHostController
 import androidx.test.core.app.ApplicationProvider
@@ -23,7 +24,6 @@ import com.andriiprudyus.myresume.testUtils.RecyclerViewInteraction
 import com.andriiprudyus.myresume.testUtils.SwipeRefreshLayoutMatchers.isRefreshing
 import com.andriiprudyus.myresume.ui.company.list.adapter.CompaniesAdapter
 import com.andriiprudyus.myresume.ui.company.list.viewModel.CompanyListViewModel
-import com.andriiprudyus.myresume.ui.company.list.viewModel.CompanyListViewModelFactory
 import com.andriiprudyus.utils.formattedDate
 import org.hamcrest.Matchers.allOf
 import org.hamcrest.Matchers.not
@@ -42,7 +42,7 @@ class CompanyListFragmentTest {
     private lateinit var mockViewModel: CompanyListViewModel
 
     @Mock
-    private lateinit var mockViewModelFactory: CompanyListViewModelFactory
+    private lateinit var mockViewModelFactory: ViewModelProvider.Factory
 
     private val fragmentFactory = object : FragmentFactory() {
         override fun instantiate(classLoader: ClassLoader, className: String): Fragment {
@@ -58,8 +58,7 @@ class CompanyListFragmentTest {
 
     @Test
     fun loadCompanies_stateLoading() {
-        `when`(mockViewModel.companyList())
-            .thenReturn(MutableLiveData<State<List<Company>>>(State.Loading()))
+        `when`(mockViewModel.companyList()).thenReturn(MutableLiveData(State.Loading()))
 
         launchFragmentInContainer<CompanyListFragment>(null, R.style.AppTheme, fragmentFactory)
 
@@ -71,8 +70,7 @@ class CompanyListFragmentTest {
 
     @Test
     fun loadCompanies_stateSuccess_emptyList() {
-        `when`(mockViewModel.companyList())
-            .thenReturn(MutableLiveData<State<List<Company>>>(State.Success(listOf())))
+        `when`(mockViewModel.companyList()).thenReturn(MutableLiveData(State.Success(emptyList())))
 
         launchFragmentInContainer<CompanyListFragment>(null, R.style.AppTheme, fragmentFactory)
 
@@ -86,7 +84,7 @@ class CompanyListFragmentTest {
     fun loadCompanies_stateSuccess_notEmptyList() {
         `when`(mockViewModel.companyList())
             .thenReturn(
-                MutableLiveData<State<List<Company>>>(
+                MutableLiveData(
                     State.Success(
                         listOf(
                             Company(
@@ -113,7 +111,7 @@ class CompanyListFragmentTest {
     @Test
     fun loadCompanies_stateFailure_contentEmpty() {
         `when`(mockViewModel.companyList())
-            .thenReturn(MutableLiveData<State<List<Company>>>(State.Failure(Exception("Test"))))
+            .thenReturn(MutableLiveData(State.Failure(Exception("Test"))))
 
         launchFragmentInContainer<CompanyListFragment>(null, R.style.AppTheme, fragmentFactory)
 
@@ -157,9 +155,8 @@ class CompanyListFragmentTest {
 
     @Test
     fun swipeRefresh_stateSuccess_contentEmpty() {
-        `when`(mockViewModel.companyList())
-            .thenReturn(MutableLiveData<State<List<Company>>>(State.Success(emptyList())))
-        `when`(mockViewModel.refresh()).thenReturn(MutableLiveData<State<Any>>(State.Success(Any())))
+        `when`(mockViewModel.companyList()).thenReturn(MutableLiveData(State.Success(emptyList())))
+        `when`(mockViewModel.refresh()).thenReturn(MutableLiveData(State.Success(Any())))
 
         launchFragmentInContainer<CompanyListFragment>(null, R.style.AppTheme, fragmentFactory)
 
@@ -174,7 +171,7 @@ class CompanyListFragmentTest {
     fun swipeRefresh_stateSuccess_contentNotEmpty() {
         `when`(mockViewModel.companyList())
             .thenReturn(
-                MutableLiveData<State<List<Company>>>(
+                MutableLiveData(
                     State.Success(
                         listOf(
                             Company(
@@ -189,7 +186,7 @@ class CompanyListFragmentTest {
                     )
                 )
             )
-        `when`(mockViewModel.refresh()).thenReturn(MutableLiveData<State<Any>>(State.Success(Any())))
+        `when`(mockViewModel.refresh()).thenReturn(MutableLiveData(State.Success(Any())))
 
         launchFragmentInContainer<CompanyListFragment>(null, R.style.AppTheme, fragmentFactory)
 
@@ -204,10 +201,8 @@ class CompanyListFragmentTest {
     fun swipeRefresh_stateFailure_contentEmpty() {
         val message = "Test"
 
-        `when`(mockViewModel.companyList())
-            .thenReturn(MutableLiveData<State<List<Company>>>(State.Success(emptyList())))
-        `when`(mockViewModel.refresh())
-            .thenReturn(MutableLiveData<State<Any>>(State.Failure(Exception(message))))
+        `when`(mockViewModel.companyList()).thenReturn(MutableLiveData(State.Success(emptyList())))
+        `when`(mockViewModel.refresh()).thenReturn(MutableLiveData(State.Failure(Exception(message))))
 
         launchFragmentInContainer<CompanyListFragment>(null, R.style.AppTheme, fragmentFactory)
 
@@ -226,7 +221,7 @@ class CompanyListFragmentTest {
 
         `when`(mockViewModel.companyList())
             .thenReturn(
-                MutableLiveData<State<List<Company>>>(
+                MutableLiveData(
                     State.Success(
                         listOf(
                             Company(
@@ -241,8 +236,7 @@ class CompanyListFragmentTest {
                     )
                 )
             )
-        `when`(mockViewModel.refresh())
-            .thenReturn(MutableLiveData<State<Any>>(State.Failure(Exception(message))))
+        `when`(mockViewModel.refresh()).thenReturn(MutableLiveData(State.Failure(Exception(message))))
 
         launchFragmentInContainer<CompanyListFragment>(null, R.style.AppTheme, fragmentFactory)
 
@@ -264,7 +258,7 @@ class CompanyListFragmentTest {
 
         `when`(mockViewModel.companyList())
             .thenReturn(
-                MutableLiveData<State<List<Company>>>(
+                MutableLiveData(
                     State.Success(
                         listOf(
                             Company(
@@ -478,10 +472,7 @@ class CompanyListFragmentTest {
             )
         )
 
-        `when`(mockViewModel.companyList())
-            .thenReturn(
-                MutableLiveData<State<List<Company>>>(State.Success(companies))
-            )
+        `when`(mockViewModel.companyList()).thenReturn(MutableLiveData(State.Success(companies)))
 
         launchFragmentInContainer<CompanyListFragment>(null, R.style.AppTheme, fragmentFactory)
 

@@ -4,8 +4,7 @@ import com.andriiprudyus.database.DbMediator
 import com.andriiprudyus.database.company.Company
 import com.andriiprudyus.database.company.CompanyDao
 import com.andriiprudyus.myresume.sharedPreferences.CompanySharedPreferences
-import com.andriiprudyus.network.CompanyApi
-import com.andriiprudyus.network.RestClientMediator
+import com.andriiprudyus.network.CompanyService
 import com.andriiprudyus.network.model.FileDto
 import com.andriiprudyus.network.model.GistResponse
 import io.reactivex.Completable
@@ -126,9 +125,6 @@ class CompanyListRepositoryTest {
     private lateinit var repository: CompanyListRepository
 
     @Mock
-    private lateinit var mockRestClientMediator: RestClientMediator
-
-    @Mock
     private lateinit var mockDbMediator: DbMediator
 
     @Mock
@@ -141,12 +137,12 @@ class CompanyListRepositoryTest {
     private lateinit var mockCompanyDao: CompanyDao
 
     @Mock
-    private lateinit var mockCompanyApi: CompanyApi
+    private lateinit var mockCompanyService: CompanyService
 
     @Before
     fun init() {
         repository = CompanyListRepository(
-            mockRestClientMediator,
+            mockCompanyService,
             mockDbMediator,
             mockSharedPreferences,
             mockCalendar
@@ -175,8 +171,7 @@ class CompanyListRepositoryTest {
 
         `when`(mockSharedPreferences.lastLoadDataTimestamp).thenReturn(1582583137000)
         `when`(mockCalendar.timeInMillis).thenReturn(1582669538100)
-        `when`(mockRestClientMediator.companyApi).thenReturn(mockCompanyApi)
-        `when`(mockCompanyApi.loadCompanies()).thenReturn(Single.just(Response.success(response)))
+        `when`(mockCompanyService.loadCompanies()).thenReturn(Single.just(Response.success(response)))
         `when`(mockDbMediator.companyDao).thenReturn(mockCompanyDao)
         `when`(mockCompanyDao.delete()).thenReturn(Completable.complete())
         `when`(mockCompanyDao.selectCompanies()).thenReturn(Single.just(companies))
@@ -186,7 +181,7 @@ class CompanyListRepositoryTest {
             .assertValue(companies)
             .assertComplete()
 
-        verify(mockCompanyApi).loadCompanies()
+        verify(mockCompanyService).loadCompanies()
         verify(mockCompanyDao).delete()
         verify(mockCompanyDao).selectCompanies()
     }
@@ -197,14 +192,13 @@ class CompanyListRepositoryTest {
 
         `when`(mockSharedPreferences.lastLoadDataTimestamp).thenReturn(1582583137000)
         `when`(mockCalendar.timeInMillis).thenReturn(1582669538100)
-        `when`(mockRestClientMediator.companyApi).thenReturn(mockCompanyApi)
-        `when`(mockCompanyApi.loadCompanies()).thenReturn(Single.just(Response.success(response)))
+        `when`(mockCompanyService.loadCompanies()).thenReturn(Single.just(Response.success(response)))
 
         repository.loadCompanies()
             .test()
             .assertNotComplete()
 
-        verify(mockCompanyApi).loadCompanies()
+        verify(mockCompanyService).loadCompanies()
         verify(mockCompanyDao, never()).delete()
         verify(mockCompanyDao, never()).selectCompanies()
     }

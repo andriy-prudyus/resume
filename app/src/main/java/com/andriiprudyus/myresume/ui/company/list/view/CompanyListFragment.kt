@@ -14,14 +14,14 @@ import com.andriiprudyus.myresume.R
 import com.andriiprudyus.myresume.base.adapter.ItemsDecoration
 import com.andriiprudyus.myresume.base.viewModel.ResultObserver
 import com.andriiprudyus.myresume.base.viewModel.State
-import com.andriiprudyus.myresume.di.Injector
 import com.andriiprudyus.myresume.ui.company.list.adapter.CompaniesAdapter
 import com.andriiprudyus.myresume.ui.company.list.viewModel.CompanyListViewModel
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_company_list.*
+import javax.inject.Inject
 
-class CompanyListFragment(
-    private val viewModelFactory: ViewModelProvider.Factory = Injector.companyListViewModelFactory
+class CompanyListFragment @Inject constructor(
+    private val viewModelFactory: ViewModelProvider.Factory
 ) : Fragment(R.layout.fragment_company_list), CompaniesAdapter.ActionListener {
 
     private val viewModel by viewModels<CompanyListViewModel> { viewModelFactory }
