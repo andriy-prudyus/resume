@@ -5,28 +5,23 @@ import android.view.View
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.andriiprudyus.myresume.MainActivity
 import com.andriiprudyus.myresume.R
 import com.andriiprudyus.myresume.base.viewModel.ResultObserver
 import com.andriiprudyus.myresume.base.viewModel.State
-import com.andriiprudyus.myresume.di.Injector
 import com.andriiprudyus.myresume.ui.company.details.adapter.RolesAdapter
 import com.andriiprudyus.myresume.ui.company.details.viewModel.CompanyDetailsViewModel
-import com.andriiprudyus.myresume.ui.company.details.viewModel.CompanyDetailsViewModelFactory
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_company_details.*
+import javax.inject.Inject
 
-class CompanyDetailsFragment(
-    private val viewModelFactory: CompanyDetailsViewModelFactory = Injector.companyDetailsViewModelFactory
+class CompanyDetailsFragment @Inject constructor(
+    private val viewModelFactory: ViewModelProvider.Factory
 ) : Fragment(R.layout.fragment_company_details) {
 
-    private val viewModel by viewModels<CompanyDetailsViewModel> {
-        viewModelFactory.apply {
-            companyName =
-                arguments?.let { CompanyDetailsFragmentArgs.fromBundle(it).companyName } ?: ""
-        }
-    }
+    private val viewModel by viewModels<CompanyDetailsViewModel> { viewModelFactory }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -35,7 +30,12 @@ class CompanyDetailsFragment(
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        (activity as? MainActivity)?.supportActionBar?.title = viewModel.companyName
+
+        (arguments?.let { CompanyDetailsFragmentArgs.fromBundle(it).companyName } ?: "").let {
+            viewModel.companyName = it
+            (activity as? MainActivity)?.supportActionBar?.title = it
+        }
+
         loadData()
     }
 

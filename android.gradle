@@ -27,6 +27,9 @@ android {
 dependencies {
     implementation libraries.kotlin
 
+    implementation libraries.dagger
+    kapt libraries.daggerCompiler
+
     testImplementation testLibraries.junit
     testImplementation testLibraries.truth
 

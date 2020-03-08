@@ -5,7 +5,6 @@ import com.andriiprudyus.database.company.Company
 import com.andriiprudyus.myresume.base.viewModel.State
 import com.andriiprudyus.myresume.testUtils.RxImmediateSchedulerRule
 import com.andriiprudyus.myresume.ui.company.list.repository.CompanyListRepository
-import com.andriiprudyus.myresume.ui.company.list.viewModel.CompanyListViewModel
 import io.reactivex.Single
 import junit.framework.Assert.assertEquals
 import org.junit.Before

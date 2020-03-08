@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentFactory
 import androidx.fragment.app.testing.launchFragmentInContainer
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModelProvider
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
@@ -14,7 +15,6 @@ import com.andriiprudyus.myresume.R
 import com.andriiprudyus.myresume.base.viewModel.State
 import com.andriiprudyus.myresume.ui.company.details.adapter.RolesAdapter
 import com.andriiprudyus.myresume.ui.company.details.viewModel.CompanyDetailsViewModel
-import com.andriiprudyus.myresume.ui.company.details.viewModel.CompanyDetailsViewModelFactory
 import org.hamcrest.Matchers.not
 import org.junit.Before
 import org.junit.Test
@@ -32,10 +32,10 @@ class CompanyDetailsFragmentTest {
     }
 
     @Mock
-    private lateinit var mockViewModelFactory: CompanyDetailsViewModelFactory
+    private lateinit var mockViewModel: CompanyDetailsViewModel
 
     @Mock
-    private lateinit var mockViewModel: CompanyDetailsViewModel
+    private lateinit var mockViewModelFactory: ViewModelProvider.Factory
 
     private val fragmentFactory = object : FragmentFactory() {
         override fun instantiate(classLoader: ClassLoader, className: String): Fragment {
@@ -55,8 +55,7 @@ class CompanyDetailsFragmentTest {
 
     @Test
     fun loadData_stateLoading() {
-        `when`(mockViewModel.getItems())
-            .thenReturn(MutableLiveData<State<List<RolesAdapter.Item>>>(State.Loading()))
+        `when`(mockViewModel.getItems()).thenReturn(MutableLiveData(State.Loading()))
 
         launchFragmentInContainer<CompanyDetailsFragment>(args, R.style.AppTheme, fragmentFactory)
 
@@ -67,8 +66,7 @@ class CompanyDetailsFragmentTest {
 
     @Test
     fun loadData_stateSuccess_emptyList() {
-        `when`(mockViewModel.getItems())
-            .thenReturn(MutableLiveData<State<List<RolesAdapter.Item>>>(State.Success(emptyList())))
+        `when`(mockViewModel.getItems()).thenReturn(MutableLiveData(State.Success(emptyList())))
 
         launchFragmentInContainer<CompanyDetailsFragment>(args, R.style.AppTheme, fragmentFactory)
 
@@ -81,7 +79,7 @@ class CompanyDetailsFragmentTest {
     fun loadData_stateSuccess_notEmptyList() {
         `when`(mockViewModel.getItems())
             .thenReturn(
-                MutableLiveData<State<List<RolesAdapter.Item>>>(
+                MutableLiveData(
                     State.Success(
                         listOf(
                             RolesAdapter.Item.Summary("Developed good mobile applications"),
@@ -125,9 +123,7 @@ class CompanyDetailsFragmentTest {
     fun loadData_stateFailure() {
         val message = "Test"
 
-        `when`(mockViewModel.getItems()).thenReturn(
-            MutableLiveData<State<List<RolesAdapter.Item>>>(State.Failure(Exception(message)))
-        )
+        `when`(mockViewModel.getItems()).thenReturn(MutableLiveData(State.Failure(Exception(message))))
 
         launchFragmentInContainer<CompanyDetailsFragment>(args, R.style.AppTheme, fragmentFactory)
 

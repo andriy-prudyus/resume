@@ -102,7 +102,12 @@ class CompanyConverterTest {
                 ),
                 listOf(
                     RoleWithRelations(
-                        DbRole("Android Developer / Team Lead", "eMagicOne", 1546300800000, 1577750400000),
+                        DbRole(
+                            "Android Developer / Team Lead",
+                            "eMagicOne",
+                            1546300800000,
+                            1577750400000
+                        ),
                         listOf(
                             DbResponsibility(
                                 "eMagicOne",

@@ -19,7 +19,7 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    implementation libraries.room
+    api libraries.room
     implementation libraries.roomRxJava2
     kapt libraries.roomCompiler
 

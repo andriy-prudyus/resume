@@ -6,8 +6,8 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     implementation libraries.retrofit
-    implementation libraries.retrofitConverterGson
-    implementation libraries.retrofit2AdapterRxJava2
+    api libraries.retrofitConverterGson
+    api libraries.retrofit2AdapterRxJava2
 
     implementation libraries.okhttpLoggingInterceptor
     implementation libraries.okhttpProfiler
