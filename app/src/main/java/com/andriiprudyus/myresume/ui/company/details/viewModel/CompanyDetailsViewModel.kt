@@ -2,76 +2,69 @@ package com.andriiprudyus.myresume.ui.company.details.viewModel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.andriiprudyus.database.achievement.DbAchievement
-import com.andriiprudyus.database.responsibility.DbResponsibility
-import com.andriiprudyus.database.role.DbRole
-import com.andriiprudyus.myresume.base.viewModel.BaseViewModel
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.andriiprudyus.myresume.base.viewModel.State
 import com.andriiprudyus.myresume.ui.company.details.adapter.RolesAdapter
 import com.andriiprudyus.myresume.ui.company.details.repository.CompanyDetailsRepository
-import io.reactivex.Single
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.functions.Function4
-import io.reactivex.schedulers.Schedulers
+import kotlinx.coroutines.*
 import timber.log.Timber
 import javax.inject.Inject
 
 class CompanyDetailsViewModel @Inject constructor(
     private val repository: CompanyDetailsRepository
-) : BaseViewModel() {
+) : ViewModel() {
 
     var companyName = ""
 
-    private val items = MutableLiveData<State<List<RolesAdapter.Item>>>()
-
-    fun getItems(): LiveData<State<List<RolesAdapter.Item>>> {
-        Single.zip(
-                repository.loadSummary(companyName),
-                repository.loadRoles(companyName),
-                repository.loadResponsibilities(companyName),
-                repository.loadAchievements(companyName),
-                Function4<String, List<DbRole>, List<DbResponsibility>, List<DbAchievement>, List<RolesAdapter.Item>> { summary, roles, responsibilities, achievements ->
-                    val items = mutableListOf<RolesAdapter.Item>()
-                    items.add(RolesAdapter.Item.Summary(summary))
-
-                    roles.forEach { role ->
-                        items.add(RolesAdapter.Item.Role(role))
-
-                        items.addAll(
-                            responsibilities
-                                .filter { responsibility -> responsibility.roleName == role.roleName }
-                                .map {
-                                    RolesAdapter.Item.Responsibility(it.responsibilityName)
-                                }
-                        )
-
-                        items.addAll(
-                            achievements
-                                .filter { achievement -> achievement.roleName == role.roleName }
-                                .map {
-                                    RolesAdapter.Item.Achievement(it.achievementName)
-                                }
-                        )
-                    }
-
-                    items
-                }
-            )
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .doOnSubscribe {
-                items.value = State.Loading()
+    val items: LiveData<State<List<RolesAdapter.Item>>> by lazy {
+        MutableLiveData<State<List<RolesAdapter.Item>>>().also { result ->
+            viewModelScope.launch(CoroutineExceptionHandler { _, e ->
+                Timber.e(e)
+                result.value = State.Failure(e)
+            }) {
+                result.value = State.Loading()
+                result.value = State.Success(loadItems())
             }
-            .subscribe({
-                items.value = State.Success(it)
-            }, {
-                Timber.e(it)
-                items.value = State.Failure(it)
-            })
-            .also {
-                compositeDisposable.add(it)
+        }
+    }
+
+    private suspend fun loadItems(): List<RolesAdapter.Item> {
+        return withContext(Dispatchers.IO) {
+            val deferredSummary = async { repository.loadSummary(companyName) }
+            val deferredRoles = async { repository.loadRoles(companyName) }
+            val deferredResponsibilities = async { repository.loadResponsibilities(companyName) }
+            val deferredAchievements = async { repository.loadAchievements(companyName) }
+
+            val summary = deferredSummary.await()
+            val roles = deferredRoles.await()
+            val responsibilities = deferredResponsibilities.await()
+            val achievements = deferredAchievements.await()
+
+            val items = mutableListOf<RolesAdapter.Item>()
+            items.add(RolesAdapter.Item.Summary(summary))
+
+            roles.forEach { role ->
+                items.add(RolesAdapter.Item.Role(role))
+
+                items.addAll(
+                    responsibilities
+                        .filter { responsibility -> responsibility.roleName == role.roleName }
+                        .map {
+                            RolesAdapter.Item.Responsibility(it.responsibilityName)
+                        }
+                )
+
+                items.addAll(
+                    achievements
+                        .filter { achievement -> achievement.roleName == role.roleName }
+                        .map {
+                            RolesAdapter.Item.Achievement(it.achievementName)
+                        }
+                )
             }
 
-        return items
+            items
+        }
     }
 }

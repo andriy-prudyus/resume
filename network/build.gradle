@@ -7,7 +7,6 @@ dependencies {
 
     implementation libraries.retrofit
     api libraries.retrofitConverterGson
-    api libraries.retrofit2AdapterRxJava2
 
     implementation libraries.okhttpLoggingInterceptor
     implementation libraries.okhttpProfiler

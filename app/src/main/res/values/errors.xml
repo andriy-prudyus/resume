@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="error_incorrect_url">Incorrect URL</string>
+    <string name="error_internal_server_error">Internal server error</string>
+    <string name="error_no_internet">No internet connection</string>
+    <string name="error_unknown">Unknown error</string>
+    <string name="error_invalid_file_content">Invalid file content</string>
+</resources>

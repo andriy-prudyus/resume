@@ -20,7 +20,7 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     api libraries.room
-    implementation libraries.roomRxJava2
+    implementation libraries.roomKtx
     kapt libraries.roomCompiler
 
     implementation libraries.gson

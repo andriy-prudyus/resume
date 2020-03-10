@@ -1,5 +1,6 @@
 package com.andriiprudyus.database
 
+import androidx.room.withTransaction
 import com.andriiprudyus.database.achievement.AchievementDao
 import com.andriiprudyus.database.company.CompanyDao
 import com.andriiprudyus.database.responsibility.ResponsibilityDao
@@ -14,8 +15,8 @@ class DbMediator @Inject constructor(
     val achievementDao: AchievementDao
 ) {
 
-    fun runInTransaction(body: (dbMediator: DbMediator) -> Unit) {
-        db.runInTransaction {
+    suspend fun runInTransaction(body: suspend (dbMediator: DbMediator) -> Unit) {
+        db.withTransaction {
             body.invoke(this)
         }
     }

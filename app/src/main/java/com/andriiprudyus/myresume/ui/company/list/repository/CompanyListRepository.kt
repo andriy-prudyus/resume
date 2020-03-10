@@ -8,13 +8,15 @@ import com.andriiprudyus.database.company.DbCompany
 import com.andriiprudyus.database.responsibility.DbResponsibility
 import com.andriiprudyus.database.role.DbRole
 import com.andriiprudyus.myresume.converter.toCompaniesWithRelations
+import com.andriiprudyus.myresume.error.AppException
+import com.andriiprudyus.myresume.error.ErrorCode
 import com.andriiprudyus.myresume.sharedPreferences.CompanySharedPreferences
 import com.andriiprudyus.network.CompanyService
 import com.andriiprudyus.network.model.CompanyDto
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import io.reactivex.Completable
-import io.reactivex.Single
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import java.util.*
 import javax.inject.Inject
 
@@ -30,81 +32,55 @@ class CompanyListRepository @Inject constructor(
         private const val CACHE_EXPIRATION = 86400000 // ms (1 day)
     }
 
-    fun loadCompanies(): Single<List<Company>> {
-        return Single.fromCallable {
-                sharedPreferences.lastLoadDataTimestamp
+    suspend fun loadCompanies(): List<Company> {
+        return withContext(Dispatchers.IO) {
+            if (calendar.timeInMillis - sharedPreferences.lastLoadDataTimestamp > CACHE_EXPIRATION) {
+                val companies = loadCompaniesFromServer()
+                dbMediator.companyDao.delete()
+                saveCompanies(companies.toCompaniesWithRelations())
+                sharedPreferences.lastLoadDataTimestamp = calendar.timeInMillis
             }
-            .flatMap {
-                if (calendar.timeInMillis - it > CACHE_EXPIRATION) {
-                    loadCompaniesFromServer()
-                        .map { companies ->
-                            companies.toCompaniesWithRelations()
-                        }
-                        .flatMap { companiesWithRelations ->
-                            dbMediator.companyDao.delete().toSingleDefault(companiesWithRelations)
-                        }
-                        .flatMap { companiesWithRelations ->
-                            saveCompanies(companiesWithRelations).toSingleDefault(Any())
-                        }
-                        .map {
-                            sharedPreferences.lastLoadDataTimestamp = calendar.timeInMillis
-                        }
-                } else {
-                    Single.just(Any())
-                }
-            }
-            .flatMap {
-                dbMediator.companyDao.selectCompanies()
-            }
+
+            dbMediator.companyDao.selectCompanies()
+        }
     }
 
-    fun refreshCompanies(): Single<List<Company>> {
-        return Single.fromCallable {
-                sharedPreferences.lastLoadDataTimestamp = 0
-            }
-            .flatMap {
-                loadCompanies()
-            }
+    suspend fun refreshCompanies(): List<Company> {
+        sharedPreferences.lastLoadDataTimestamp = 0
+        return loadCompanies()
     }
 
-    private fun loadCompaniesFromServer(): Single<List<CompanyDto>> {
-        return companyService.loadCompanies()
-            .flatMap { response ->
-                val token = object : TypeToken<List<CompanyDto>>() {}.type
-                val content = response.body()!!.files[FILE_NAME]?.content
+    @Throws(IllegalArgumentException::class)
+    private suspend fun loadCompaniesFromServer(): List<CompanyDto> {
+        val response = companyService.loadCompanies()
+        val token = object : TypeToken<List<CompanyDto>>() {}.type
+        val content = response.body()!!.files[FILE_NAME]?.content
 
-                if (content == null) {
-                    Single.error(IllegalArgumentException("File content is invalid")) //TODO: Use localized string
-                } else {
-                    Single.just(Gson().fromJson<List<CompanyDto>>(content, token))
-                }
-            }
+        return Gson().fromJson(content, token) ?: throw AppException(ErrorCode.INVALID_FILE_CONTENT)
     }
 
-    private fun saveCompanies(companiesWithRelations: List<CompanyWithRelations>): Completable {
-        return Completable.fromCallable {
-            dbMediator.runInTransaction { dbMediator ->
-                val companies = mutableListOf<DbCompany>()
-                val roles = mutableListOf<DbRole>()
-                val responsibilities = mutableListOf<DbResponsibility>()
-                val achievements = mutableListOf<DbAchievement>()
+    private suspend fun saveCompanies(companiesWithRelations: List<CompanyWithRelations>) {
+        dbMediator.runInTransaction { dbMediator ->
+            val companies = mutableListOf<DbCompany>()
+            val roles = mutableListOf<DbRole>()
+            val responsibilities = mutableListOf<DbResponsibility>()
+            val achievements = mutableListOf<DbAchievement>()
 
-                companiesWithRelations.forEach { companyWithRelations ->
-                    companies.add(companyWithRelations.company)
+            companiesWithRelations.forEach { companyWithRelations ->
+                companies.add(companyWithRelations.company)
 
-                    companyWithRelations.rolesWithRelations.forEach { roleWithRelations ->
-                        roles.add(roleWithRelations.role)
-                        responsibilities.addAll(roleWithRelations.responsibilities)
-                        achievements.addAll(roleWithRelations.achievements)
-                    }
+                companyWithRelations.rolesWithRelations.forEach { roleWithRelations ->
+                    roles.add(roleWithRelations.role)
+                    responsibilities.addAll(roleWithRelations.responsibilities)
+                    achievements.addAll(roleWithRelations.achievements)
                 }
+            }
 
-                dbMediator.run {
-                    companyDao.insert(companies)
-                    roleDao.insert(roles)
-                    responsibilityDao.insert(responsibilities)
-                    achievementDao.insert(achievements)
-                }
+            dbMediator.run {
+                companyDao.insert(companies)
+                roleDao.insert(roles)
+                responsibilityDao.insert(responsibilities)
+                achievementDao.insert(achievements)
             }
         }
     }

@@ -11,9 +11,9 @@ import com.andriiprudyus.myresume.MainActivity
 import com.andriiprudyus.myresume.R
 import com.andriiprudyus.myresume.base.viewModel.ResultObserver
 import com.andriiprudyus.myresume.base.viewModel.State
+import com.andriiprudyus.myresume.extension.showErrorSnackbar
 import com.andriiprudyus.myresume.ui.company.details.adapter.RolesAdapter
 import com.andriiprudyus.myresume.ui.company.details.viewModel.CompanyDetailsViewModel
-import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_company_details.*
 import javax.inject.Inject
 
@@ -47,7 +47,7 @@ class CompanyDetailsFragment @Inject constructor(
     }
 
     private fun loadData() {
-        viewModel.getItems().also { liveData ->
+        viewModel.items.also { liveData ->
             liveData.observe(viewLifecycleOwner, ResultObserver(liveData) { state ->
                 when (state) {
                     is State.Success -> {
@@ -65,12 +65,7 @@ class CompanyDetailsFragment @Inject constructor(
                     is State.Failure -> {
                         progressBar.isVisible = false
                         noDataTextView.isVisible = true
-
-                        view?.let {
-                            Snackbar
-                                .make(it, state.throwable.localizedMessage, Snackbar.LENGTH_LONG)
-                                .show()
-                        }
+                        view?.let { showErrorSnackbar(it, state.throwable) }
                     }
                 }
             })

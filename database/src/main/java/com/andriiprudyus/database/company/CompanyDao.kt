@@ -3,18 +3,16 @@ package com.andriiprudyus.database.company
 import androidx.room.Dao
 import androidx.room.Query
 import com.andriiprudyus.database.BaseDao
-import io.reactivex.Completable
-import io.reactivex.Single
 
 @Dao
 abstract class CompanyDao : BaseDao<DbCompany>() {
 
     @Query("SELECT * FROM Company")
-    abstract fun selectCompanies(): Single<List<Company>>
+    abstract suspend fun selectCompanies(): List<Company>
 
     @Query("SELECT summary FROM DbCompany WHERE companyName = :companyName")
-    abstract fun selectSummary(companyName: String): Single<String>
+    abstract suspend fun selectSummary(companyName: String): String
 
     @Query("DELETE FROM DbCompany")
-    abstract fun delete(): Completable
+    abstract suspend fun delete(): Int
 }

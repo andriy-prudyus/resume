@@ -1,15 +1,20 @@
 package com.andriiprudyus.network.di
 
+import android.content.Context
+import android.net.ConnectivityManager
+import android.net.NetworkRequest
 import com.andriiprudyus.network.BuildConfig
 import com.andriiprudyus.network.CompanyService
 import com.andriiprudyus.network.addInterceptors
+import com.andriiprudyus.network.availability.NetworkAvailabilityMediator
+import com.andriiprudyus.network.availability.NetworkCallback
+import com.andriiprudyus.network.availability.NetworkInterceptor
 import com.itkacher.okhttpprofiler.OkHttpProfilerInterceptor
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
@@ -26,12 +31,13 @@ class NetworkModule {
 
     @Singleton
     @Provides
-    fun provideOkHttpClient(): OkHttpClient {
+    fun provideOkHttpClient(networkAvailabilityMediator: NetworkAvailabilityMediator): OkHttpClient {
         return OkHttpClient.Builder()
             .connectTimeout(CONNECTION_TIMEOUT, TimeUnit.SECONDS)
             .readTimeout(READ_TIMEOUT, TimeUnit.SECONDS)
             .addInterceptors(
                 listOfNotNull(
+                    NetworkInterceptor { networkAvailabilityMediator.isAvailable },
                     HttpLoggingInterceptor(object : HttpLoggingInterceptor.Logger {
                         override fun log(message: String) {
                             Timber.d(message)
@@ -56,22 +62,14 @@ class NetworkModule {
 
     @Singleton
     @Provides
-    fun provideRxJavaCallAdapterFactory(): RxJava2CallAdapterFactory {
-        return RxJava2CallAdapterFactory.create()
-    }
-
-    @Singleton
-    @Provides
     fun provideRetrofit(
         client: OkHttpClient,
-        converterFactory: GsonConverterFactory,
-        callAdapterFactory: RxJava2CallAdapterFactory
+        converterFactory: GsonConverterFactory
     ): Retrofit {
         return Retrofit.Builder()
             .baseUrl(BASE_URL)
             .client(client)
             .addConverterFactory(converterFactory)
-            .addCallAdapterFactory(callAdapterFactory)
             .build()
     }
 
@@ -80,4 +78,18 @@ class NetworkModule {
     fun provideCompanyRetrofitService(retrofit: Retrofit): CompanyService {
         return retrofit.create(CompanyService::class.java)
     }
+
+    @Singleton
+    @Provides
+    fun provideConnectivityManager(context: Context): ConnectivityManager {
+        return context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+    }
+
+    @Singleton
+    @Provides
+    fun provideNetworkRequest(): NetworkRequest = NetworkRequest.Builder().build()
+
+    @Singleton
+    @Provides
+    fun provideNetworkCallback(): NetworkCallback = NetworkCallback()
 }

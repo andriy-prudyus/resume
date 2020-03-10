@@ -41,6 +41,7 @@ dependencies {
     implementation libraries.navigationFragment
     implementation libraries.navigationUi
     implementation libraries.lifecycleExtensions
+    implementation libraries.lifecycleLiveData
     implementation libraries.navigationFragmentKtx
     implementation libraries.navigationUiKtx
 
@@ -48,8 +49,8 @@ dependencies {
 
     implementation libraries.glide
 
-    implementation libraries.rxJava
-    implementation libraries.rxAndroid
+    implementation libraries.coroutinesCore
+    implementation libraries.coroutinesAndroid
 
     implementation libraries.retrofit
 

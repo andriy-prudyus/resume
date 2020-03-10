@@ -14,9 +14,9 @@ import com.andriiprudyus.myresume.R
 import com.andriiprudyus.myresume.base.adapter.ItemsDecoration
 import com.andriiprudyus.myresume.base.viewModel.ResultObserver
 import com.andriiprudyus.myresume.base.viewModel.State
+import com.andriiprudyus.myresume.extension.showErrorSnackbar
 import com.andriiprudyus.myresume.ui.company.list.adapter.CompaniesAdapter
 import com.andriiprudyus.myresume.ui.company.list.viewModel.CompanyListViewModel
-import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_company_list.*
 import javax.inject.Inject
 
@@ -77,12 +77,7 @@ class CompanyListFragment @Inject constructor(
                 is State.Failure -> {
                     progressBar.isVisible = false
                     noDataTextView.isVisible = !recyclerView.isVisible
-
-                    view?.let {
-                        Snackbar
-                            .make(it, state.throwable.localizedMessage, Snackbar.LENGTH_LONG)
-                            .show()
-                    }
+                    view?.let { showErrorSnackbar(it, state.throwable) }
                 }
             }
         })
@@ -97,12 +92,7 @@ class CompanyListFragment @Inject constructor(
                     }
                     is State.Failure -> {
                         swipeRefreshLayout.isRefreshing = false
-
-                        view?.let {
-                            Snackbar
-                                .make(it, state.throwable.localizedMessage, Snackbar.LENGTH_LONG)
-                                .show()
-                        }
+                        view?.let { showErrorSnackbar(it, state.throwable) }
                     }
                 }
             })

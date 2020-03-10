@@ -13,35 +13,35 @@ abstract class BaseDao<T : Any> {
      * @return rowId of inserted item.
      */
     @Insert(onConflict = REPLACE)
-    abstract fun insert(item: T): Long
+    abstract suspend fun insert(item: T): Long
 
     /**
      * @return list of rowIds of inserted items.
      */
     @Insert(onConflict = REPLACE)
-    abstract fun insert(items: List<T>): List<Long>
+    abstract suspend fun insert(items: List<T>): List<Long>
 
     /**
      * @return number of updated rows.
      */
     @Update(onConflict = REPLACE)
-    abstract fun update(item: T): Int
+    abstract suspend fun update(item: T): Int
 
     /**
      * @return number of updated rows.
      */
     @Update(onConflict = REPLACE)
-    abstract fun update(items: List<T>): Int
+    abstract suspend fun update(items: List<T>): Int
 
     /**
      * @return number of deleted rows.
      */
     @Delete
-    abstract fun delete(item: T): Int
+    abstract suspend fun delete(item: T): Int
 
     /**
      * @return number of deleted rows.
      */
     @Delete
-    abstract fun delete(items: List<T>): Int
+    abstract suspend fun delete(items: List<T>): Int
 }
