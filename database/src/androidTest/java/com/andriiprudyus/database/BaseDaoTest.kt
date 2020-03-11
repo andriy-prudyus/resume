@@ -13,6 +13,7 @@ import com.andriiprudyus.database.role.DbRole
 import com.andriiprudyus.database.test.R
 import com.andriiprudyus.database.utils.fromJson
 import com.google.gson.reflect.TypeToken
+import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Before
 import org.junit.runner.RunWith
@@ -53,42 +54,50 @@ abstract class BaseDaoTest {
     }
 
     private fun insertCompanies() {
-        db.companyDao().insert(
-            fromJson<List<DbCompany>>(
-                context,
-                R.raw.db_test_companies,
-                object : TypeToken<List<DbCompany>>() {}.type
+        runBlocking {
+            db.companyDao().insert(
+                fromJson<List<DbCompany>>(
+                    context,
+                    R.raw.db_test_companies,
+                    object : TypeToken<List<DbCompany>>() {}.type
+                )
             )
-        )
+        }
     }
 
     private fun insertRoles() {
-        db.roleDao().insert(
-            fromJson<List<DbRole>>(
-                context,
-                R.raw.db_test_roles,
-                object : TypeToken<List<DbRole>>() {}.type
+        runBlocking {
+            db.roleDao().insert(
+                fromJson<List<DbRole>>(
+                    context,
+                    R.raw.db_test_roles,
+                    object : TypeToken<List<DbRole>>() {}.type
+                )
             )
-        )
+        }
     }
 
     private fun insertResponsibilities() {
-        db.responsibilityDao().insert(
-            fromJson<List<DbResponsibility>>(
-                context,
-                R.raw.db_test_responsibilities,
-                object : TypeToken<List<DbResponsibility>>() {}.type
+        runBlocking {
+            db.responsibilityDao().insert(
+                fromJson<List<DbResponsibility>>(
+                    context,
+                    R.raw.db_test_responsibilities,
+                    object : TypeToken<List<DbResponsibility>>() {}.type
+                )
             )
-        )
+        }
     }
 
     private fun insertAchievements() {
-        db.achievementDao().insert(
-            fromJson<List<DbAchievement>>(
-                context,
-                R.raw.db_test_achievements,
-                object : TypeToken<List<DbAchievement>>() {}.type
+        runBlocking {
+            db.achievementDao().insert(
+                fromJson<List<DbAchievement>>(
+                    context,
+                    R.raw.db_test_achievements,
+                    object : TypeToken<List<DbAchievement>>() {}.type
+                )
             )
-        )
+        }
     }
 }

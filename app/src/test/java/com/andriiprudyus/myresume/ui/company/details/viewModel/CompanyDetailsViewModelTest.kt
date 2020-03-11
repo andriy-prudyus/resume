@@ -4,13 +4,14 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.andriiprudyus.database.achievement.DbAchievement
 import com.andriiprudyus.database.responsibility.DbResponsibility
 import com.andriiprudyus.database.role.DbRole
-import com.andriiprudyus.myresume.testUtils.RxImmediateSchedulerRule
+import com.andriiprudyus.myresume.base.viewModel.State
 import com.andriiprudyus.myresume.ui.company.details.adapter.RolesAdapter
 import com.andriiprudyus.myresume.ui.company.details.repository.CompanyDetailsRepository
+import com.github.testcoroutinesrule.TestCoroutineRule
 import com.google.common.truth.Truth.assertThat
-import io.reactivex.Single
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.runBlocking
 import org.junit.Before
-import org.junit.ClassRule
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -22,16 +23,15 @@ import org.mockito.junit.MockitoJUnitRunner
 class CompanyDetailsViewModelTest {
 
     companion object {
-        @ClassRule
-        @JvmField
-        val schedulerRule = RxImmediateSchedulerRule()
-
         private const val COMPANY_NAME = "eMagicOne"
     }
 
-    @Rule
-    @JvmField
+    @get:Rule
     val rule = InstantTaskExecutorRule()
+
+    @ExperimentalCoroutinesApi
+    @get:Rule
+    val coroutineRule = TestCoroutineRule()
 
     private lateinit var viewModel: CompanyDetailsViewModel
 
@@ -128,15 +128,24 @@ class CompanyDetailsViewModelTest {
             RolesAdapter.Item.Achievement("Developed Mobile Assistant for Magento")
         )
 
-        `when`(mockRepository.loadSummary(COMPANY_NAME)).thenReturn(Single.just(summary))
-        `when`(mockRepository.loadRoles(COMPANY_NAME)).thenReturn(Single.just(roles))
-        `when`(mockRepository.loadResponsibilities(COMPANY_NAME)).thenReturn(
-            Single.just(responsibilities)
-        )
-        `when`(mockRepository.loadAchievements(COMPANY_NAME)).thenReturn(Single.just(achievements))
+        runBlocking {
+            `when`(mockRepository.loadSummary(COMPANY_NAME)).thenReturn(summary)
+            `when`(mockRepository.loadRoles(COMPANY_NAME)).thenReturn(roles)
+            `when`(mockRepository.loadResponsibilities(COMPANY_NAME)).thenReturn(responsibilities)
+            `when`(mockRepository.loadAchievements(COMPANY_NAME)).thenReturn(achievements)
 
-        viewModel.getItems().observeForever { state ->
-            assertThat(state.data).containsExactlyElementsIn(expected).inOrder()
+            viewModel.items.observeForever {}
+
+            var loading = true
+            while (loading) {
+                val state = viewModel.items.value
+
+                if (state !is State.Loading) {
+                    assert(state is State.Success)
+                    assertThat(state!!.data).containsExactlyElementsIn(expected).inOrder()
+                    loading = false
+                }
+            }
         }
     }
 }

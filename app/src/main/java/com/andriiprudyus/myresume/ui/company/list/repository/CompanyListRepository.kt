@@ -50,7 +50,7 @@ class CompanyListRepository @Inject constructor(
         return loadCompanies()
     }
 
-    @Throws(IllegalArgumentException::class)
+    @Throws(AppException::class)
     private suspend fun loadCompaniesFromServer(): List<CompanyDto> {
         val response = companyService.loadCompanies()
         val token = object : TypeToken<List<CompanyDto>>() {}.type

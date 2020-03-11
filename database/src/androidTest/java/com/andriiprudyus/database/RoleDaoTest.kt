@@ -1,6 +1,7 @@
 package com.andriiprudyus.database
 
 import com.andriiprudyus.database.role.DbRole
+import kotlinx.coroutines.runBlocking
 import org.junit.Test
 
 class RoleDaoTest : BaseDaoTest() {
@@ -35,11 +36,8 @@ class RoleDaoTest : BaseDaoTest() {
             DbRole("Android Developer", companyName, 1503014400000, 1546214400000)
         )
 
-        db.roleDao().select(companyName)
-            .test()
-            .assertValue { actual ->
-                areEqual(expected, actual)
-            }
-            .assertComplete()
+        runBlocking {
+            areEqual(expected, db.roleDao().select(companyName))
+        }
     }
 }

@@ -1,6 +1,7 @@
 package com.andriiprudyus.database
 
 import com.andriiprudyus.database.responsibility.DbResponsibility
+import kotlinx.coroutines.runBlocking
 import org.junit.Test
 
 class ResponsibilityDaoTest : BaseDaoTest() {
@@ -54,11 +55,8 @@ class ResponsibilityDaoTest : BaseDaoTest() {
             DbResponsibility(companyName, "Android Developer", "Writing tests")
         )
 
-        db.responsibilityDao().select(companyName)
-            .test()
-            .assertValue { actual ->
-                areEqual(expected, actual)
-            }
-            .assertComplete()
+        runBlocking {
+            assert(areEqual(expected, db.responsibilityDao().select(companyName)))
+        }
     }
 }

@@ -59,6 +59,8 @@ dependencies {
     testImplementation testLibraries.mockito
     testImplementation testLibraries.dexMakerInlineMockito
     testImplementation testLibraries.archCoreTesting
+    testImplementation testLibraries.coroutinesTest
+    testImplementation testLibraries.testCoroutineRule
 
     androidTestImplementation testLibraries.espressoCore
     androidTestImplementation testLibraries.espressoContrib

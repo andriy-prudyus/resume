@@ -7,8 +7,8 @@ import com.andriiprudyus.myresume.sharedPreferences.CompanySharedPreferences
 import com.andriiprudyus.network.CompanyService
 import com.andriiprudyus.network.model.FileDto
 import com.andriiprudyus.network.model.GistResponse
-import io.reactivex.Completable
-import io.reactivex.Single
+import kotlinx.coroutines.runBlocking
+import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -151,65 +151,65 @@ class CompanyListRepositoryTest {
 
     @Test
     fun loadCompanies_cache() {
-        `when`(mockSharedPreferences.lastLoadDataTimestamp).thenReturn(1582669538000)
-        `when`(mockCalendar.timeInMillis).thenReturn(1582669538100)
-        `when`(mockDbMediator.companyDao).thenReturn(mockCompanyDao)
-        `when`(mockCompanyDao.selectCompanies()).thenReturn(Single.just(companies))
+        runBlocking {
+            `when`(mockSharedPreferences.lastLoadDataTimestamp).thenReturn(1582669538000)
+            `when`(mockCalendar.timeInMillis).thenReturn(1582669538100)
+            `when`(mockDbMediator.companyDao).thenReturn(mockCompanyDao)
+            `when`(mockCompanyDao.selectCompanies()).thenReturn(companies)
 
-        repository.loadCompanies()
-            .test()
-            .assertValue(companies)
-            .assertComplete()
+            assertEquals(companies, repository.loadCompanies())
 
-        verify(mockCompanyDao).selectCompanies()
-        verify(mockCompanyDao, never()).delete()
+            verify(mockCompanyDao).selectCompanies()
+            verify(mockCompanyDao, never()).delete()
+        }
     }
 
     @Test
     fun loadCompanies_noCache_success() {
         val response = GistResponse(mapOf("Companies.json" to FileDto(content)))
 
-        `when`(mockSharedPreferences.lastLoadDataTimestamp).thenReturn(1582583137000)
-        `when`(mockCalendar.timeInMillis).thenReturn(1582669538100)
-        `when`(mockCompanyService.loadCompanies()).thenReturn(Single.just(Response.success(response)))
-        `when`(mockDbMediator.companyDao).thenReturn(mockCompanyDao)
-        `when`(mockCompanyDao.delete()).thenReturn(Completable.complete())
-        `when`(mockCompanyDao.selectCompanies()).thenReturn(Single.just(companies))
+        runBlocking {
+            `when`(mockSharedPreferences.lastLoadDataTimestamp).thenReturn(1582583137000)
+            `when`(mockCalendar.timeInMillis).thenReturn(1582669538100)
+            `when`(mockCompanyService.loadCompanies()).thenReturn(Response.success(response))
+            `when`(mockDbMediator.companyDao).thenReturn(mockCompanyDao)
+//            `when`(mockCompanyDao.delete()).thenReturn(Completable.complete())
+            `when`(mockCompanyDao.selectCompanies()).thenReturn(companies)
 
-        repository.loadCompanies()
-            .test()
-            .assertValue(companies)
-            .assertComplete()
+            assertEquals(companies, repository.loadCompanies())
 
-        verify(mockCompanyService).loadCompanies()
-        verify(mockCompanyDao).delete()
-        verify(mockCompanyDao).selectCompanies()
+            verify(mockCompanyService).loadCompanies()
+            verify(mockCompanyDao).delete()
+            verify(mockCompanyDao).selectCompanies()
+        }
     }
 
     @Test
     fun loadCompanies_noCache_failure() {
-        val response = GistResponse(mapOf("File.json" to FileDto(content)))
+        val response = GistResponse(mapOf("Fake.json" to FileDto(content)))
 
-        `when`(mockSharedPreferences.lastLoadDataTimestamp).thenReturn(1582583137000)
-        `when`(mockCalendar.timeInMillis).thenReturn(1582669538100)
-        `when`(mockCompanyService.loadCompanies()).thenReturn(Single.just(Response.success(response)))
+        runBlocking {
+            `when`(mockSharedPreferences.lastLoadDataTimestamp).thenReturn(1582583137000)
+            `when`(mockCalendar.timeInMillis).thenReturn(1582669538100)
+            `when`(mockCompanyService.loadCompanies()).thenReturn(Response.success(response))
 
-        repository.loadCompanies()
-            .test()
-            .assertNotComplete()
+            try {
+                repository.loadCompanies()
+            } catch (e: Exception) {
+            }
 
-        verify(mockCompanyService).loadCompanies()
-        verify(mockCompanyDao, never()).delete()
-        verify(mockCompanyDao, never()).selectCompanies()
+            verify(mockCompanyService).loadCompanies()
+            verify(mockCompanyDao, never()).delete()
+            verify(mockCompanyDao, never()).selectCompanies()
+        }
     }
 
     @Test
     fun refreshCompanies() {
-        val spy = spy(repository)
-        doReturn(Single.just(companies)).`when`(spy).loadCompanies()
-
-        spy.refreshCompanies()
-            .test()
-            .assertValue(companies)
+        runBlocking {
+            val spy = spy(repository)
+            doReturn(companies).`when`(spy).loadCompanies()
+            assertEquals(companies, spy.refreshCompanies())
+        }
     }
 }

@@ -3,12 +3,12 @@ package com.andriiprudyus.myresume.ui.company.list.viewModel
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.andriiprudyus.database.company.Company
 import com.andriiprudyus.myresume.base.viewModel.State
-import com.andriiprudyus.myresume.testUtils.RxImmediateSchedulerRule
 import com.andriiprudyus.myresume.ui.company.list.repository.CompanyListRepository
-import io.reactivex.Single
+import com.github.testcoroutinesrule.TestCoroutineRule
 import junit.framework.Assert.assertEquals
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.runBlocking
 import org.junit.Before
-import org.junit.ClassRule
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -19,15 +19,12 @@ import org.mockito.junit.MockitoJUnitRunner
 @RunWith(MockitoJUnitRunner::class)
 class CompanyListViewModelTest {
 
-    companion object {
-        @ClassRule
-        @JvmField
-        val schedulerRule = RxImmediateSchedulerRule()
-    }
-
-    @Rule
-    @JvmField
+    @get:Rule
     val rule = InstantTaskExecutorRule()
+
+    @ExperimentalCoroutinesApi
+    @get:Rule
+    val coroutineRule = TestCoroutineRule()
 
     private lateinit var viewModel: CompanyListViewModel
 
@@ -60,19 +57,23 @@ class CompanyListViewModelTest {
             )
         )
 
-        `when`(mockRepository.loadCompanies()).thenReturn(Single.just(expected))
+        runBlocking {
+            `when`(mockRepository.loadCompanies()).thenReturn(expected)
 
-        viewModel.companyList().observeForever {
-            assertEquals(expected, it.data)
+            viewModel.companyList().observeForever {
+                assertEquals(expected, it.data)
+            }
         }
     }
 
     @Test
     fun refresh() {
-        `when`(mockRepository.refreshCompanies()).thenReturn(Single.just(listOf()))
+        runBlocking {
+            `when`(mockRepository.refreshCompanies()).thenReturn(emptyList())
 
-        viewModel.refresh().observeForever {
-            assert(it is State.Success)
+            viewModel.refresh().observeForever {
+                assert(it is State.Success)
+            }
         }
     }
 }

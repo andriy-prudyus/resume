@@ -8,7 +8,8 @@ import com.andriiprudyus.database.responsibility.DbResponsibility
 import com.andriiprudyus.database.responsibility.ResponsibilityDao
 import com.andriiprudyus.database.role.DbRole
 import com.andriiprudyus.database.role.RoleDao
-import io.reactivex.Single
+import kotlinx.coroutines.runBlocking
+import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -49,12 +50,12 @@ class CompanyDetailsRepositoryTest {
     fun loadSummary() {
         val expected = "Developed good mobile applications"
 
-        `when`(mockDbMediator.companyDao).thenReturn(mockCompanyDao)
-        `when`(mockCompanyDao.selectSummary(COMPANY_NAME)).thenReturn(Single.just(expected))
+        runBlocking {
+            `when`(mockDbMediator.companyDao).thenReturn(mockCompanyDao)
+            `when`(mockCompanyDao.selectSummary(COMPANY_NAME)).thenReturn(expected)
 
-        repository.loadSummary(COMPANY_NAME)
-            .test()
-            .assertValue(expected)
+            assertEquals(expected, repository.loadSummary(COMPANY_NAME))
+        }
     }
 
     @Test
@@ -64,12 +65,12 @@ class CompanyDetailsRepositoryTest {
             DbRole("Android Developer", COMPANY_NAME, 1403014400000, 1503014400000)
         )
 
-        `when`(mockDbMediator.roleDao).thenReturn(mockRoleDao)
-        `when`(mockRoleDao.select(COMPANY_NAME)).thenReturn(Single.just(expected))
+        runBlocking {
+            `when`(mockDbMediator.roleDao).thenReturn(mockRoleDao)
+            `when`(mockRoleDao.select(COMPANY_NAME)).thenReturn(expected)
 
-        repository.loadRoles(COMPANY_NAME)
-            .test()
-            .assertValue(expected)
+            assertEquals(expected, repository.loadRoles(COMPANY_NAME))
+        }
     }
 
     @Test
@@ -83,12 +84,12 @@ class CompanyDetailsRepositoryTest {
             DbResponsibility(COMPANY_NAME, "Android Developer", "Writing tests")
         )
 
-        `when`(mockDbMediator.responsibilityDao).thenReturn(mockResponsibilityDao)
-        `when`(mockResponsibilityDao.select(COMPANY_NAME)).thenReturn(Single.just(expected))
+        runBlocking {
+            `when`(mockDbMediator.responsibilityDao).thenReturn(mockResponsibilityDao)
+            `when`(mockResponsibilityDao.select(COMPANY_NAME)).thenReturn(expected)
 
-        repository.loadResponsibilities(COMPANY_NAME)
-            .test()
-            .assertValue(expected)
+            assertEquals(expected, repository.loadResponsibilities(COMPANY_NAME))
+        }
     }
 
     @Test
@@ -111,11 +112,11 @@ class CompanyDetailsRepositoryTest {
             )
         )
 
-        `when`(mockDbMediator.achievementDao).thenReturn(mockAchievementDao)
-        `when`(mockAchievementDao.select(COMPANY_NAME)).thenReturn(Single.just(expected))
+        runBlocking {
+            `when`(mockDbMediator.achievementDao).thenReturn(mockAchievementDao)
+            `when`(mockAchievementDao.select(COMPANY_NAME)).thenReturn(expected)
 
-        repository.loadAchievements(COMPANY_NAME)
-            .test()
-            .assertValue(expected)
+            assertEquals(expected, repository.loadAchievements(COMPANY_NAME))
+        }
     }
 }

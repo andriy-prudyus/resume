@@ -1,6 +1,7 @@
 package com.andriiprudyus.database
 
 import com.andriiprudyus.database.achievement.DbAchievement
+import kotlinx.coroutines.runBlocking
 import org.junit.Test
 
 class AchievementDaoTest : BaseDaoTest() {
@@ -62,11 +63,8 @@ class AchievementDaoTest : BaseDaoTest() {
             )
         )
 
-        db.achievementDao().select(companyName)
-            .test()
-            .assertValue { actual ->
-                areEqual(expected, actual)
-            }
-            .assertComplete()
+        runBlocking {
+            assert(areEqual(expected, db.achievementDao().select(companyName)))
+        }
     }
 }

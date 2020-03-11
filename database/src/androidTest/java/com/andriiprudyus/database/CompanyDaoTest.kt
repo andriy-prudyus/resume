@@ -1,13 +1,15 @@
 package com.andriiprudyus.database
 
 import com.andriiprudyus.database.company.Company
+import junit.framework.Assert.assertEquals
+import kotlinx.coroutines.runBlocking
 import org.junit.Test
 
 class CompanyDaoTest : BaseDaoTest() {
 
     @Test
     fun selectCompanies() {
-        val companies = listOf(
+        val expected = listOf(
             Company(
                 "eMagicOne",
                 "https://emagicone.com/i/logo_150dpi_cdr_1_site.png",
@@ -26,32 +28,26 @@ class CompanyDaoTest : BaseDaoTest() {
             )
         )
 
-        db.companyDao().selectCompanies()
-            .test()
-            .assertValue(companies)
-            .assertComplete()
+        runBlocking {
+            assertEquals(expected, db.companyDao().selectCompanies())
+        }
     }
 
     @Test
     fun selectSummary() {
         val companyName = "Google"
-        val summary = "Developed good mobile application, gained experience"
+        val expected = "Developed good mobile application, gained experience"
 
-        db.companyDao().selectSummary(companyName)
-            .test()
-            .assertValue(summary)
-            .assertComplete()
+        runBlocking {
+            assertEquals(expected, db.companyDao().selectSummary(companyName))
+        }
     }
 
     @Test
     fun delete() {
-        db.companyDao().delete()
-            .toSingleDefault(Any())
-            .flatMap {
-                db.companyDao().selectCompanies()
-            }
-            .test()
-            .assertValue(emptyList())
-            .assertComplete()
+        runBlocking {
+            db.companyDao().delete()
+            assert(db.companyDao().selectCompanies().isEmpty())
+        }
     }
 }

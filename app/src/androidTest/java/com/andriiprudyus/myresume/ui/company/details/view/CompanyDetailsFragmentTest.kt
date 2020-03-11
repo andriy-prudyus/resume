@@ -55,7 +55,7 @@ class CompanyDetailsFragmentTest {
 
     @Test
     fun loadData_stateLoading() {
-        `when`(mockViewModel.getItems()).thenReturn(MutableLiveData(State.Loading()))
+        `when`(mockViewModel.items).thenReturn(MutableLiveData(State.Loading()))
 
         launchFragmentInContainer<CompanyDetailsFragment>(args, R.style.AppTheme, fragmentFactory)
 
@@ -66,7 +66,7 @@ class CompanyDetailsFragmentTest {
 
     @Test
     fun loadData_stateSuccess_emptyList() {
-        `when`(mockViewModel.getItems()).thenReturn(MutableLiveData(State.Success(emptyList())))
+        `when`(mockViewModel.items).thenReturn(MutableLiveData(State.Success(emptyList())))
 
         launchFragmentInContainer<CompanyDetailsFragment>(args, R.style.AppTheme, fragmentFactory)
 
@@ -77,7 +77,7 @@ class CompanyDetailsFragmentTest {
 
     @Test
     fun loadData_stateSuccess_notEmptyList() {
-        `when`(mockViewModel.getItems())
+        `when`(mockViewModel.items)
             .thenReturn(
                 MutableLiveData(
                     State.Success(
@@ -123,7 +123,7 @@ class CompanyDetailsFragmentTest {
     fun loadData_stateFailure() {
         val message = "Test"
 
-        `when`(mockViewModel.getItems()).thenReturn(MutableLiveData(State.Failure(Exception(message))))
+        `when`(mockViewModel.items).thenReturn(MutableLiveData(State.Failure(Exception(message))))
 
         launchFragmentInContainer<CompanyDetailsFragment>(args, R.style.AppTheme, fragmentFactory)
 
