@@ -27,38 +27,37 @@ task clean(type: Delete) {
 }
 
 ext {
-    appCompatVersion                = "1.1.0"
-    coreVersion                     = "1.2.0"
-    materialVersion                 = "1.1.0"
-    constraintLayoutVersion         = "1.1.3"
-    swiperefreshlayoutVersion       = "1.0.0"
-    navigationVersion               = "2.3.0-alpha03"
-    lifecycleVersion                = "2.2.0"
-    roomVersion                     = "2.2.4"
+    appCompatVersion = '1.1.0'
+    coreVersion = '1.2.0'
+    materialVersion = '1.1.0'
+    constraintLayoutVersion = '1.1.3'
+    swiperefreshlayoutVersion = '1.0.0'
+    navigationVersion = '2.3.0-alpha04'
+    lifecycleVersion = '2.2.0'
+    roomVersion = '2.2.5'
 
-    coroutinesVersion               = "1.3.4"
+    coroutinesVersion = '1.3.4'
 
-    daggerVersion                   = "2.26"
+    daggerVersion = '2.27'
 
-    gsonVersion                     = "2.8.6"
-    glideVersion                    = "4.11.0"
+    gsonVersion = '2.8.6'
+    glideVersion = '4.11.0'
 
-    retrofitVersion                 = "2.7.1"
-    loggingInterceptorVersion       = "4.4.0"
-    okhttpprofilerVersion           = "1.0.5"
+    retrofitVersion = '2.7.2'
+    stethoVersion = '1.5.1'
 
-    timberVersion                   = "4.7.1"
+    timberVersion = '4.7.1'
 
-    junitVersion                    = "4.12"
-    testRunnerVersion               = "1.2.0"
-    extJunitVersion                 = "1.1.1"
-    espressoVersion                 = "3.2.0"
-    mockitoVersion                  = "3.3.0"
-    dexMakerInlineMockitoVersion    = "2.25.1"
-    archCoreTestingVersion          = "2.1.0"
-    truthVersion                    = "1.0.1"
-    fragmentTestingVersion          = "1.2.2"
-    testCoroutineRuleVersion        = "1.0.1"
+    junitVersion = '4.12'
+    testRunnerVersion = '1.2.0'
+    extJunitVersion = '1.1.1'
+    espressoVersion = '3.2.0'
+    mockitoVersion = '3.3.0'
+    dexMakerInlineMockitoVersion = '2.25.1'
+    archCoreTestingVersion = '2.1.0'
+    truthVersion = '1.0.1'
+    fragmentTestingVersion = '1.2.3'
+    testCoroutineRuleVersion = '1.0.1'
 
     libraries = [
             kotlin                  : "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version",
@@ -88,11 +87,10 @@ ext {
 
             retrofit                : "com.squareup.retrofit2:retrofit:$retrofitVersion",
             retrofitConverterGson   : "com.squareup.retrofit2:converter-gson:$retrofitVersion",
-            retrofit2AdapterRxJava2 : "com.squareup.retrofit2:adapter-rxjava2:$retrofitVersion",
 
-            okhttpLoggingInterceptor: "com.squareup.okhttp3:logging-interceptor:$loggingInterceptorVersion",
-            okhttpProfiler          : "com.itkacher.okhttpprofiler:okhttpprofiler:$okhttpprofilerVersion",
-            
+            stetho                  : "com.facebook.stetho:stetho:$stethoVersion",
+            stethoOkhttp            : "com.facebook.stetho:stetho-okhttp3:$stethoVersion",
+
             coroutinesCore          : "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion",
             coroutinesAndroid       : "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion",
 

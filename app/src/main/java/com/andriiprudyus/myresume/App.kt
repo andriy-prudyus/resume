@@ -3,6 +3,7 @@ package com.andriiprudyus.myresume
 import android.app.Application
 import com.andriiprudyus.myresume.di.AppComponent
 import com.andriiprudyus.myresume.di.DaggerAppComponent
+import com.facebook.stetho.Stetho
 import timber.log.Timber
 
 class App : Application() {
@@ -17,6 +18,7 @@ class App : Application() {
     private fun initLogging() {
         if (BuildConfig.isLoggingEnabled) {
             Timber.plant(Timber.DebugTree())
+            Stetho.initializeWithDefaults(this)
         }
     }
 

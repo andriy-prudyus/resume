@@ -3,20 +3,16 @@ package com.andriiprudyus.network.di
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkRequest
-import com.andriiprudyus.network.BuildConfig
 import com.andriiprudyus.network.CompanyService
-import com.andriiprudyus.network.addInterceptors
 import com.andriiprudyus.network.availability.NetworkAvailabilityMediator
 import com.andriiprudyus.network.availability.NetworkCallback
 import com.andriiprudyus.network.availability.NetworkInterceptor
-import com.itkacher.okhttpprofiler.OkHttpProfilerInterceptor
+import com.facebook.stetho.okhttp3.StethoInterceptor
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
-import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import timber.log.Timber
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
@@ -35,24 +31,8 @@ class NetworkModule {
         return OkHttpClient.Builder()
             .connectTimeout(CONNECTION_TIMEOUT, TimeUnit.SECONDS)
             .readTimeout(READ_TIMEOUT, TimeUnit.SECONDS)
-            .addInterceptors(
-                listOfNotNull(
-                    NetworkInterceptor { networkAvailabilityMediator.isAvailable },
-                    HttpLoggingInterceptor(object : HttpLoggingInterceptor.Logger {
-                        override fun log(message: String) {
-                            Timber.d(message)
-                        }
-                    }).apply {
-                        level =
-                            if (Timber.forest().find { it is Timber.DebugTree } == null) {
-                                HttpLoggingInterceptor.Level.BASIC
-                            } else {
-                                HttpLoggingInterceptor.Level.BODY
-                            }
-                    },
-                    if (BuildConfig.DEBUG) OkHttpProfilerInterceptor() else null
-                )
-            )
+            .addInterceptor(NetworkInterceptor { networkAvailabilityMediator.isAvailable })
+            .addNetworkInterceptor(StethoInterceptor())
             .build()
     }
 

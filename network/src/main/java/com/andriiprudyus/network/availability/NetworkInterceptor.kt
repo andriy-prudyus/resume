@@ -20,7 +20,7 @@ class NetworkInterceptor(private val isNetworkAvailable: () -> Boolean) : Interc
         }
 
         throw NetworkException(
-            when (response.code) {
+            when (response.code()) {
                 HttpURLConnection.HTTP_NOT_FOUND -> ErrorCode.HTTP_NOT_FOUND
                 HttpURLConnection.HTTP_INTERNAL_ERROR -> ErrorCode.HTTP_INTERNAL_ERROR
                 else -> ErrorCode.UNKNOWN

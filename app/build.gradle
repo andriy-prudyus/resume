@@ -54,6 +54,8 @@ dependencies {
 
     implementation libraries.retrofit
 
+    implementation libraries.stetho
+
     implementation libraries.timber
 
     testImplementation testLibraries.mockito

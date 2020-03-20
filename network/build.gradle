@@ -8,8 +8,7 @@ dependencies {
     implementation libraries.retrofit
     api libraries.retrofitConverterGson
 
-    implementation libraries.okhttpLoggingInterceptor
-    implementation libraries.okhttpProfiler
+    implementation libraries.stethoOkhttp
 
     implementation libraries.timber
 }
